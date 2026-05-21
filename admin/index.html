@@ -649,8 +649,8 @@
           <li>Token name: <code>Birthday Site Admin</code></li>
           <li>Expiration: <strong>90 days</strong> (or longer)</li>
           <li>Repository access: <strong>Only select repositories</strong> → pick <code>birthday-gift-for-sheetal</code></li>
-          <li>Permissions → <strong>Contents</strong>: <strong>Read and write</strong></li>
-          <li>Click <strong>Generate token</strong> → copy it</li>
+          <li>Click <strong>Repository permissions</strong> to expand → scroll to <strong>Contents</strong> → change dropdown from <em>No access</em> to <strong style="color: var(--accent);">Read and write</strong> ⚠ <em>(this is the most-missed step!)</em></li>
+          <li>Click <strong>Generate token</strong> → copy the full <code>github_pat_...</code> string</li>
         </ol>
 
         <label class="token-row">
@@ -1001,8 +1001,12 @@
       const t = document.getElementById("toast");
       t.textContent = msg;
       t.className = "toast " + (kind || "") + " show";
+      // Errors stick longer; success/info disappear faster
+      const duration = kind === "error" ? 10000 : 2800;
       clearTimeout(t._timer);
-      t._timer = setTimeout(() => t.classList.remove("show"), 2400);
+      t._timer = setTimeout(() => t.classList.remove("show"), duration);
+      // Allow click-to-dismiss for long errors
+      t.onclick = () => t.classList.remove("show");
     };
 
     // ====== Get/Set with overrides ======
@@ -1546,6 +1550,21 @@ if (window.SITE_DATA.uploaded_inline) {
       return btoa(unescape(encodeURIComponent(str)));
     }
 
+    // Translate GitHub API errors into actionable hints
+    function gitHubErrorHint(status, msg) {
+      if (status === 401) return "Token is invalid or expired. Create a new one via ⚙.";
+      if (status === 404) return "Repo/file not found. Check that token has access to birthday-gift-for-sheetal.";
+      if (status === 403) {
+        if (/not accessible|resource not accessible/i.test(msg || "")) {
+          return "Token lacks 'Contents: Read and write' permission. Edit your PAT at github.com/settings/personal-access-tokens and change Contents from Read to Read and write.";
+        }
+        if (/rate limit/i.test(msg || "")) return "Rate limit hit. Wait a few minutes.";
+        return "Permission denied. " + (msg || "");
+      }
+      if (status === 409 || status === 422) return "File changed on remote. Reload admin and try again.";
+      return msg || `HTTP ${status}`;
+    }
+
     async function pushDataJsToGitHub(content) {
       const token = getToken();
       if (!token) throw new Error("No token. Click ⚙ to set up.");
@@ -1563,9 +1582,7 @@ if (window.SITE_DATA.uploaded_inline) {
       const getRes = await fetch(`${url}?ref=${GH_CONFIG.branch}`, { headers });
       if (!getRes.ok) {
         const e = await getRes.json().catch(() => ({}));
-        if (getRes.status === 401) throw new Error("Token invalid or expired.");
-        if (getRes.status === 404) throw new Error("Repo/file not found. Check token permissions.");
-        throw new Error(e.message || `GET failed: ${getRes.status}`);
+        throw new Error(gitHubErrorHint(getRes.status, e.message));
       }
       const current = await getRes.json();
       // 2. PUT new content
@@ -1581,7 +1598,7 @@ if (window.SITE_DATA.uploaded_inline) {
       });
       if (!putRes.ok) {
         const e = await putRes.json().catch(() => ({}));
-        throw new Error(e.message || `PUT failed: ${putRes.status}`);
+        throw new Error(gitHubErrorHint(putRes.status, e.message));
       }
       return putRes.json();
     }
@@ -1747,19 +1764,42 @@ if (window.SITE_DATA.uploaded_inline) {
         return;
       }
       try {
-        const url = `https://api.github.com/repos/${GH_CONFIG.owner}/${GH_CONFIG.repo}`;
-        const r = await fetch(url, {
+        // Step 1: Test repo access
+        const repoUrl = `https://api.github.com/repos/${GH_CONFIG.owner}/${GH_CONFIG.repo}`;
+        const r = await fetch(repoUrl, {
           headers: {
             "Authorization": `Bearer ${getToken()}`,
             "Accept": "application/vnd.github+json"
           }
         });
-        if (r.ok) {
-          const j = await r.json();
-          toast(`Connected to ${j.full_name} ✓`, "success");
-        } else {
-          toast(`Failed: ${r.status} ${r.statusText}`, "error");
+        if (!r.ok) {
+          toast(gitHubErrorHint(r.status, (await r.json().catch(()=>({}))).message), "error");
+          return;
         }
+
+        // Step 2: Test contents WRITE permission (PUT with stale SHA — will return
+        // 409/422 if write is allowed, or 403 if write permission missing)
+        const fileUrl = `https://api.github.com/repos/${GH_CONFIG.owner}/${GH_CONFIG.repo}/contents/${GH_CONFIG.file}`;
+        const probe = await fetch(fileUrl, {
+          method: "PUT",
+          headers: {
+            "Authorization": `Bearer ${getToken()}`,
+            "Accept": "application/vnd.github+json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: "permission test",
+            content: "dGVzdA==",
+            sha: "0000000000000000000000000000000000000000"
+          })
+        });
+        if (probe.status === 403) {
+          const e = await probe.json().catch(()=>({}));
+          toast(gitHubErrorHint(403, e.message), "error");
+          return;
+        }
+        // 409 (conflict) or 422 (validation) = write permission OK, just bad SHA — which is expected
+        toast("✓ Token works! Repo access + write permission confirmed.", "success");
       } catch (e) {
         toast("Connection error: " + e.message, "error");
       }
