@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sheetal — My Birthday Queen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,500&family=Italiana&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-1: #0a0a0f; --bg-2: #14091a; --bg-3: #1a0a1f;
+    --gold: #d4af37; --gold-soft: #b8941f; --gold-bright: #f5d061;
+    --cream: #f4ead0; --muted: #8a7f6e;
+    --line: rgba(212, 175, 55, 0.25);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { overflow-x: hidden; }
+  body {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 15% 10%, rgba(212, 175, 55, 0.07), transparent 45%),
+      radial-gradient(circle at 85% 90%, rgba(212, 175, 55, 0.05), transparent 50%),
+      radial-gradient(circle at 50% 50%, var(--bg-3), var(--bg-1));
+    background-attachment: fixed;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--cream); position: relative;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image:
+      radial-gradient(2px 2px at 20% 30%, rgba(245, 208, 97, 0.4), transparent),
+      radial-gradient(1px 1px at 80% 20%, rgba(212, 175, 55, 0.5), transparent),
+      radial-gradient(1px 1px at 60% 70%, rgba(245, 208, 97, 0.3), transparent),
+      radial-gradient(2px 2px at 30% 85%, rgba(212, 175, 55, 0.4), transparent),
+      radial-gradient(1px 1px at 90% 60%, rgba(245, 208, 97, 0.4), transparent),
+      radial-gradient(1px 1px at 10% 60%, rgba(212, 175, 55, 0.3), transparent);
+    background-size: 400px 400px;
+    pointer-events: none; z-index: 0;
+    animation: twinkle 8s ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.4; } 50% { opacity: 0.9; }
+  }
+  .wrapper {
+    max-width: 480px; margin: 0 auto;
+    padding: 40px 16px 60px;
+    position: relative; z-index: 1;
+  }
+  .crown {
+    text-align: center; font-size: 36px;
+    color: var(--gold); margin-bottom: 8px;
+    filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.4));
+    animation: glow 3s ease-in-out infinite;
+  }
+  @keyframes glow {
+    0%, 100% { filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.3)); }
+    50% { filter: drop-shadow(0 0 16px rgba(212, 175, 55, 0.6)); }
+  }
+  .eyebrow {
+    text-align: center; font-family: 'Cinzel', serif;
+    font-size: 10px; letter-spacing: 8px;
+    color: var(--gold); margin-bottom: 18px; font-weight: 500;
+  }
+  .eyebrow::before, .eyebrow::after { content: ' · '; color: var(--gold-soft); }
+  .title {
+    text-align: center; font-family: 'Italiana', serif;
+    font-size: 48px; line-height: 1; color: var(--cream);
+    margin-bottom: 4px; font-weight: 400; letter-spacing: 1px;
+  }
+  .title em {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; color: var(--gold); font-weight: 300;
+  }
+  .roman {
+    text-align: center; font-family: 'Cinzel', serif;
+    font-size: 11px; letter-spacing: 6px;
+    color: var(--gold-soft); margin-bottom: 36px;
+  }
+  .featured {
+    position: relative; margin: 0 auto 38px;
+    padding: 8px; border: 1px solid var(--gold);
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.05), transparent);
+    width: 88%;
+  }
+  .featured::before {
+    content: ''; position: absolute; inset: -6px;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    pointer-events: none;
+  }
+  .featured img {
+    width: 100%; aspect-ratio: 3 / 4; object-fit: cover;
+    display: block; object-position: center 20%;
+    filter: contrast(1.05) saturate(0.9);
+  }
+  .featured .tag {
+    position: absolute; top: 18px; left: 18px;
+    background: rgba(10, 10, 15, 0.85); color: var(--gold);
+    font-family: 'Cinzel', serif; font-size: 9px;
+    letter-spacing: 4px; padding: 6px 10px;
+    border: 1px solid var(--gold-soft);
+  }
+  .featured .num {
+    position: absolute; bottom: 16px; right: 18px;
+    font-family: 'Italiana', serif; font-size: 40px;
+    color: var(--gold); line-height: 1;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+  }
+  .quote {
+    text-align: center; margin: 0 8px 40px;
+    position: relative;
+  }
+  .quote .line {
+    height: 1px; width: 60px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto 18px;
+  }
+  .quote p {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 22px; line-height: 1.5;
+    color: var(--cream); font-weight: 300;
+  }
+  .quote p .accent { color: var(--gold-bright); font-style: italic; }
+  .gallery {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-bottom: 40px;
+  }
+  .gallery .item {
+    position: relative; padding: 4px;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    background: rgba(255,255,255,0.02);
+  }
+  .gallery .item img {
+    width: 100%; aspect-ratio: 3 / 4; object-fit: cover;
+    display: block; object-position: center 22%;
+    filter: contrast(1.05);
+  }
+  .gallery .item .corner {
+    position: absolute; bottom: 8px; left: 8px;
+    background: rgba(10, 10, 15, 0.85); color: var(--gold);
+    font-family: 'Cinzel', serif; font-size: 8px;
+    letter-spacing: 3px; padding: 4px 7px;
+    border: 1px solid var(--gold-soft);
+  }
+  .stats {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px; margin: 40px 0;
+    background: var(--line);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .stat { background: var(--bg-1); padding: 22px 8px; text-align: center; }
+  .stat .v {
+    font-family: 'Italiana', serif; font-size: 30px;
+    color: var(--gold); line-height: 1; margin-bottom: 6px;
+  }
+  .stat .l {
+    font-family: 'Cinzel', serif; font-size: 9px;
+    letter-spacing: 3px; color: var(--muted);
+  }
+  .closing { text-align: center; padding: 20px 14px 10px; }
+  .closing .ornament {
+    color: var(--gold); font-size: 16px;
+    letter-spacing: 10px; margin-bottom: 18px;
+  }
+  .closing h2 {
+    font-family: 'Italiana', serif; font-size: 28px;
+    color: var(--cream); line-height: 1.2;
+    margin-bottom: 18px; font-weight: 400;
+  }
+  .closing h2 em {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--gold); font-style: italic;
+  }
+  .closing p {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 17px; color: var(--muted); line-height: 1.55;
+    max-width: 360px; margin: 0 auto; font-weight: 300;
+  }
+  .seal { text-align: center; margin-top: 36px; }
+  .seal .ring {
+    display: inline-block; width: 70px; height: 70px;
+    border: 1px solid var(--gold); border-radius: 50%;
+    line-height: 70px; color: var(--gold);
+    font-family: 'Italiana', serif; font-size: 28px;
+    position: relative;
+  }
+  .seal .ring::before {
+    content: ''; position: absolute; inset: 4px;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-radius: 50%;
+  }
+  .seal .text {
+    margin-top: 12px; font-family: 'Cinzel', serif;
+    font-size: 9px; letter-spacing: 5px;
+    color: var(--gold-soft);
+  }
+  .nav-row {
+    display: flex; justify-content: space-between;
+    margin-top: 40px; padding: 0 8px;
+  }
+  .nav-row a {
+    font-family: 'Cinzel', serif; font-size: 10px;
+    letter-spacing: 5px; color: var(--gold-soft);
+    text-decoration: none; padding: 10px;
+  }
+  .nav-row a:hover { color: var(--gold-bright); }
+</style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="crown">♛</div>
+    <div class="eyebrow" data-t="page3.eyebrow">ROYAL EDITION</div>
+    <h1 class="title" data-t="page3.title_html">Sheetal — <em>my Queen</em></h1>
+    <div class="roman" data-t="page3.roman">— MMXXVI · TURNING XXII —</div>
+
+    <div class="featured">
+      <span class="tag" data-t="page3.tag">PORTRAIT NO. I</span>
+      <img src="images/13_saree_pink.jpg" alt="" data-img="p3_feature">
+      <span class="num">01</span>
+    </div>
+
+    <div class="quote">
+      <div class="line"></div>
+      <p data-t="page3.quote_html">
+        <span class="accent">Born</span> a queen,
+        <br>still ruling <span class="accent">every</span> moment of me.
+      </p>
+      <div class="line" style="margin-top:18px"></div>
+    </div>
+
+    <div class="gallery">
+      <div class="item">
+        <img src="images/14_christmas_glam.jpg" alt="" data-img="p3_g1">
+        <span class="corner" data-t="page3.corner1">GRACE</span>
+      </div>
+      <div class="item">
+        <img src="images/15_highway_walk.jpg" alt="" data-img="p3_g2">
+        <span class="corner" data-t="page3.corner2">FIRE</span>
+      </div>
+      <div class="item">
+        <img src="images/16_red_stripes_close.jpg" alt="" data-img="p3_g3">
+        <span class="corner" data-t="page3.corner3">SOUL</span>
+      </div>
+      <div class="item">
+        <img src="images/17_diwali_display.jpg" alt="" data-img="p3_g4">
+        <span class="corner" data-t="page3.corner4">CHARM</span>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="v" data-t="page3.stat1_v">∞</div>
+        <div class="l" data-t="page3.stat1_l">LOVE</div>
+      </div>
+      <div class="stat">
+        <div class="v" data-t="page3.stat2_v">22</div>
+        <div class="l" data-t="page3.stat2_l">YEARS</div>
+      </div>
+      <div class="stat">
+        <div class="v" data-t="page3.stat3_v">1</div>
+        <div class="l" data-t="page3.stat3_l">QUEEN</div>
+      </div>
+    </div>
+
+    <div class="closing">
+      <div class="ornament">· ✦ ·</div>
+      <h2 data-t="page3.closing_h_html">To my <em>Sheetal</em>,<br>the woman who owns my world</h2>
+      <p data-t="page3.closing_p_html">
+        Tum sirf meri girlfriend nahi —
+        <br>tum meri kahaani ki har sundar line ho.
+      </p>
+    </div>
+
+    <div class="seal">
+      <span class="ring">♛</span>
+      <div class="text" data-t="page3.seal">SEALED IN GOLD · BY PRINCE</div>
+    </div>
+
+    <div class="nav-row">
+      <a href="2-memories.html">← back</a>
+      <a href="4-magazine.html">next →</a>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script src="gallery.js"></script>
+</body>
+</html>

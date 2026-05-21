@@ -1,0 +1,331 @@
+// ====================================================
+// data.js — Master content file for Sheetal's birthday site
+// Edit this file directly OR use admin.html to edit + export
+// ====================================================
+
+window.SITE_DATA = {
+  // ───── Global / Identity ─────
+  meta: {
+    her_name: "Sheetal",
+    his_name: "Prince Khiwaliya",
+    his_short: "Prince",
+    age: "22",
+    date_display: "22 · 05 · 2026",
+    dob_display: "22 · 05 · 2004"
+  },
+
+  // ───── List of all available images (just filenames) ─────
+  available_images: [
+    "01_bouquet_solo.jpg", "02_bouquet_couple.jpg", "03_lime_green_smile.jpg",
+    "04_laughing_close.jpg", "05_mcd_icecream.jpg", "06_peach_kurta_couple.jpg",
+    "07_floral_ceiling.jpg", "08_dessert_date.jpg", "09_peace_signs.jpg",
+    "10_summer_polo.jpg", "11_outdoor_jackets.jpg", "12_store_stripes.jpg",
+    "13_saree_pink.jpg", "14_christmas_glam.jpg", "15_highway_walk.jpg",
+    "16_red_stripes_close.jpg", "17_diwali_display.jpg", "18_cinema_solo.jpg",
+    "19_cinema_couple.jpg", "20_hexagonal_wall.jpg", "21_office_red.jpg",
+    "22_adidas_couple.jpg", "23_shinchan_cuddle.jpg", "24_smartwatch.jpg",
+    "25_shoe_store.jpg", "26_fitting_room.jpg", "27_cinema_couple_2.jpg",
+    "28_sunny_house.jpg", "29_food_court_couple.jpg", "30_food_court_solo.jpg",
+    "31_gray_jacket_solo.jpg", "32_pout_couple.jpg", "33_candy_smile.jpg",
+    "34_kiss_pout.jpg", "35_neon_store.jpg",
+    // ─── 15 NEW additions found by parallel agents ───
+    "36_rooftop_golden.jpg",      // S, rooftop golden hour, black V-neck
+    "37_marble_staircase.jpg",    // C, grand marble staircase, pink+blue
+    "38_sunglasses_hat.jpg",      // S, mall, cream top + sunglasses + hat
+    "39_purple_blazer.jpg",       // S, dressing room, purple blazer
+    "40_home_playful.jpg",        // C, home playful intimate moment
+    "41_highway_couple.jpg",      // C, highway cream/gold sweater
+    "42_black_floral.jpg",        // C, outdoor black floral dress
+    "43_maroon_blazer.jpg",       // C, formal indoor maroon blazer
+    "44_poolside.jpg",            // S, poolside, black tee
+    "45_biggies_storefront.jpg",  // S, storefront, puffer + pink skirt
+    "46_restaurant_laugh.jpg",    // C, restaurant exterior both laughing
+    "47_parking_friends.jpg",     // S center, parking lot evening, red top
+    "48_ethnic_saree.jpg",        // S, traditional maroon/cream saree
+    "49_diwali_solo.jpg",         // S, Diwali neon backdrop solo
+    "50_portrait_polished.jpg",   // S, polished close-up portrait
+    // ─── All 122 remaining photos from photos/ folder (numbered by source) ───
+    "pool_016.jpg", "pool_017.jpg", "pool_019.jpg", "pool_021.jpg",
+    "pool_022.jpg", "pool_023.jpg", "pool_024.jpg", "pool_026.jpg",
+    "pool_027.jpg", "pool_029.jpg", "pool_030.jpg", "pool_031.jpg",
+    "pool_033.jpg", "pool_034.jpg", "pool_036.jpg", "pool_037.jpg",
+    "pool_038.jpg", "pool_039.jpg", "pool_041.jpg", "pool_043.jpg",
+    "pool_044.jpg", "pool_046.jpg", "pool_047.jpg", "pool_048.jpg",
+    "pool_049.jpg", "pool_051.jpg", "pool_052.jpg", "pool_053.jpg",
+    "pool_054.jpg", "pool_056.jpg", "pool_057.jpg", "pool_058.jpg",
+    "pool_059.jpg", "pool_061.jpg", "pool_063.jpg", "pool_064.jpg",
+    "pool_065.jpg", "pool_066.jpg", "pool_067.jpg", "pool_068.jpg",
+    "pool_069.jpg", "pool_071.jpg", "pool_072.jpg", "pool_073.jpg",
+    "pool_074.jpg", "pool_076.jpg", "pool_077.jpg", "pool_078.jpg",
+    "pool_079.jpg", "pool_080.jpg", "pool_081.jpg", "pool_082.jpg",
+    "pool_083.jpg", "pool_084.jpg", "pool_086.jpg", "pool_087.jpg",
+    "pool_088.jpg", "pool_089.jpg", "pool_090.jpg", "pool_091.jpg",
+    "pool_093.jpg", "pool_094.jpg", "pool_096.jpg", "pool_097.jpg",
+    "pool_098.jpg", "pool_099.jpg", "pool_101.jpg", "pool_102.jpg",
+    "pool_104.jpg", "pool_106.jpg", "pool_107.jpg", "pool_108.jpg",
+    "pool_109.jpg", "pool_111.jpg", "pool_112.jpg", "pool_113.jpg",
+    "pool_114.jpg", "pool_116.jpg", "pool_117.jpg", "pool_118.jpg",
+    "pool_119.jpg", "pool_121.jpg", "pool_123.jpg", "pool_124.jpg",
+    "pool_126.jpg", "pool_127.jpg", "pool_128.jpg", "pool_131.jpg",
+    "pool_133.jpg", "pool_135.jpg", "pool_136.jpg", "pool_137.jpg",
+    "pool_139.jpg", "pool_142.jpg", "pool_143.jpg", "pool_144.jpg",
+    "pool_146.jpg", "pool_147.jpg", "pool_148.jpg", "pool_149.jpg",
+    "pool_151.jpg", "pool_152.jpg", "pool_154.jpg", "pool_156.jpg",
+    "pool_157.jpg", "pool_158.jpg", "pool_159.jpg", "pool_161.jpg",
+    "pool_162.jpg", "pool_163.jpg", "pool_164.jpg", "pool_166.jpg",
+    "pool_167.jpg", "pool_169.jpg", "pool_171.jpg", "pool_172.jpg",
+    "pool_173.jpg", "pool_174.jpg", "pool_176.jpg", "pool_177.jpg",
+    "pool_179.jpg", "pool_182.jpg"
+  ],
+
+  // ───── Image slots: which photo goes where ─────
+  images: {
+    // ─── Page 1 — Happy Birthday Card (4 slots) ───
+    p1_hero: "01_bouquet_solo.jpg",           // Sheetal with bouquet — THE birthday photo
+    p1_strip1: "02_bouquet_couple.jpg",       // couple in car with flowers
+    p1_strip2: "03_lime_green_smile.jpg",     // Sheetal close-up smile
+    p1_strip3: "04_laughing_close.jpg",       // both laughing close
+
+    // ─── Page 2 — Memories Scrapbook (8 slots) ───
+    p2_a1: "05_mcd_icecream.jpg",             // McDonald's ice cream date
+    p2_a2: "06_peach_kurta_couple.jpg",       // peach kurta mirror selfie
+    p2_feature: "07_floral_ceiling.jpg",      // floral ceiling restaurant — feature
+    p2_b1: "08_dessert_date.jpg",             // dessert date evening
+    p2_b2: "09_peace_signs.jpg",              // cinema peace signs
+    p2_tilt: "10_summer_polo.jpg",            // summer outdoor H&M polo
+    p2_c1: "11_outdoor_jackets.jpg",          // outdoor black jackets
+    p2_c2: "12_store_stripes.jpg",            // clothing store mirror
+
+    // ─── Page 3 — Birthday Queen (5 SOLO slots) ───
+    p3_feature: "13_saree_pink.jpg",          // pink saree event — feature
+    p3_g1: "14_christmas_glam.jpg",           // GRACE — christmas tree glam
+    p3_g2: "15_highway_walk.jpg",             // FIRE — highway walk, sunglasses
+    p3_g3: "16_red_stripes_close.jpg",        // SOUL — red striped close-up
+    p3_g4: "17_diwali_display.jpg",           // CHARM — Diwali display full body
+
+    // ─── Page 4 — Magazine (10 slots) ───
+    p4_cover: "18_cinema_solo.jpg",           // cinema full body — magazine cover
+    p4_m1: "19_cinema_couple.jpg",            // FIRST LOOK — cinema couple
+    p4_m2: "20_hexagonal_wall.jpg",           // GOLDEN HOUR — hexagonal warm light
+    p4_m3: "21_office_red.jpg",               // WORK DAYS — red cardigan office
+    p4_m4: "22_adidas_couple.jpg",            // AT EASE — adidas couple home
+    p4_m5: "23_shinchan_cuddle.jpg",          // YOUR LAUGH — shinchan cuddle
+    p4_m6: "24_smartwatch.jpg",               // EVERY LITTLE THING — watch with her photo
+    p4_wide: "25_shoe_store.jpg",             // wide hero — couple shoe store
+    p4_close1: "26_fitting_room.jpg",         // closing — fitting room solo
+    p4_close2: "37_marble_staircase.jpg",     // closing — marble staircase (UPGRADED)
+
+    // ─── Page 5 — Heart Mosaic ───
+    // 26 small circles cycling through unique photos
+    p5_r1c2: "01_bouquet_solo.jpg",
+    p5_r1c3: "02_bouquet_couple.jpg",
+    p5_r1c5: "03_lime_green_smile.jpg",
+    p5_r1c6: "04_laughing_close.jpg",
+    p5_r2c1: "05_mcd_icecream.jpg",
+    p5_r2c2: "07_floral_ceiling.jpg",
+    p5_r2c3: "08_dessert_date.jpg",
+    p5_r2c4: "09_peace_signs.jpg",
+    p5_r2c5: "11_outdoor_jackets.jpg",
+    p5_r2c6: "12_store_stripes.jpg",
+    p5_r2c7: "13_saree_pink.jpg",
+    p5_r3c1: "14_christmas_glam.jpg",
+    p5_r3c2: "15_highway_walk.jpg",
+    p5_r3c3: "16_red_stripes_close.jpg",
+    p5_r3c5: "17_diwali_display.jpg",
+    p5_r3c6: "18_cinema_solo.jpg",
+    p5_r3c7: "20_hexagonal_wall.jpg",
+    p5_r4c2: "21_office_red.jpg",
+    p5_r4c3: "22_adidas_couple.jpg",
+    p5_r4c4: "23_shinchan_cuddle.jpg",
+    p5_r4c5: "25_shoe_store.jpg",
+    p5_r4c6: "26_fitting_room.jpg",
+    p5_r5c3: "32_pout_couple.jpg",
+    p5_r5c4: "33_candy_smile.jpg",
+    p5_r5c5: "34_kiss_pout.jpg",
+    p5_r6c4: "35_neon_store.jpg",
+    // Premium card + 3 arches
+    p5_premium: "06_peach_kurta_couple.jpg",  // premium centerpiece
+    p5_arch1: "10_summer_polo.jpg",
+    p5_arch2: "19_cinema_couple.jpg",
+    p5_arch3: "27_cinema_couple_2.jpg",
+
+    // ─── Page 6 — Timeline (8 slots) ───
+    p6_ch1: "28_sunny_house.jpg",             // The first hello — outdoor sunny couple
+    p6_ch2: "29_food_court_couple.jpg",       // Slow afternoons — food court
+    p6_ch3: "30_food_court_solo.jpg",         // In every light — Sheetal sunny outdoor
+    p6_ch4: "31_gray_jacket_solo.jpg",        // Little everydays — Sheetal casual
+    p6_ch5: "32_pout_couple.jpg",             // Still you — playful couple
+    p6_duo1: "33_candy_smile.jpg",            // duo left — candy store smile
+    p6_duo2: "34_kiss_pout.jpg",              // duo right — kiss pout
+    p6_final: "35_neon_store.jpg"             // final big — neon couple
+  },
+
+  // ───── Image position (object-position) — useful when face is cut ─────
+  image_positions: {
+    // Defaults work for most. Per-slot overrides go here if needed.
+    p1_hero: "center 30%",
+    p1_strip1: "center 35%",
+    p3_feature: "center 30%",
+    p3_g2: "center 18%",       // highway shot — slight upper focus
+    p3_g4: "center 30%",       // Diwali full body
+    p4_cover: "center 25%",
+    p4_wide: "center 30%",
+    p6_final: "center 25%"
+  },
+
+  // ═══════════════════════════════════════
+  // TEXT CONTENT
+  // ═══════════════════════════════════════
+
+  index: {
+    eyebrow: "— A BIRTHDAY GIFT —",
+    title_html: "For <em>Sheetal</em>,<br>with love.",
+    sub_html: "Six little pages.<br>One whole heart.",
+    intro_html: "&ldquo;Yeh tumhare liye hai, meri jaan —<br>khol ke padhna, ek ek page.&rdquo;",
+    card1_title_html: "Happy <em>Birthday</em>",
+    card1_desc: "a soft note · a quiet love · a card just for you.",
+    card2_title_html: "Our little <em>memories</em>",
+    card2_desc: "a scrapbook of polaroids · scribbles · our silly best.",
+    card3_title_html: "My Birthday <em>Queen</em>",
+    card3_desc: "black, gold &amp; you · the royal edition.",
+    card4_title_html: "U<em>s</em>, the magazine",
+    card4_desc: "vol. 01 · birthday issue · cover star: Sheetal.",
+    card5_title_html: "My whole <em>heart</em>",
+    card5_desc: "photos arranged in the shape of how I feel.",
+    card6_title_html: "A love letter, in <em>chapters</em>",
+    card6_desc: "a small story about why it&rsquo;s always you.",
+    footer_quote_html: "&ldquo;Tum sirf ek din ki nahi —<br>meri har subah ki wajah ho.&rdquo;",
+    footer_sig: "— MADE WITH LOVE · BY PRINCE —"
+  },
+
+  page1: {
+    eyebrow: "22 · 05 · 2026",
+    title: "Happy Birthday",
+    subtitle: "— meri Sheetal, meri jaan —",
+    message_label: "A LITTLE NOTE FOR SHEETAL",
+    message1_html: "Tum meri zindagi ka woh hissa ho — <em>jiske bina main, main nahi rehta</em>.",
+    message2_html: "Aaj ka din sirf tumhara hai, jaan — yeh phool tumhare, yeh muskuraahatein tumhari, aur yeh main, <em>hamesha tumhara</em>.",
+    closing: "I love you, Sheetal.",
+    signature_label: "— Always yours —",
+    signature: "Prince"
+  },
+
+  page2: {
+    stamp: "BIRTHDAY SPECIAL ★",
+    header_small: "our little",
+    header_title_html: "memories <span class=\"amp\">&amp;</span> moments",
+    header_sub: "a tiny scrapbook · for Sheetal",
+    cap1: "ice cream date",
+    cap2: "festive us",
+    cap_feature: "my favourite",
+    cap_b1: "sweet evenings",
+    cap_b2: "movie nights",
+    cap_tilt: "sunny days",
+    cap_c1: "winter walks",
+    cap_c2: "everyday us",
+    scribble1_html: "tum hasti ho — <span class=\"heart-inline\">♥</span> — toh duniya hasti hai",
+    scribble2_html: "yeh wala photo dekh ke <br>main har baar muskura deta hoon",
+    scribble3_html: "every little moment with you <br><span class=\"heart-inline\">♥</span> feels like home <span class=\"heart-inline\">♥</span>",
+    ticket_small: "·  ticket no. 22-05-26  ·",
+    ticket_big: "admit one",
+    ticket_meta: "→ ek lifetime · Sheetal ke saath ←",
+    closing: "happy birthday, jaan"
+  },
+
+  page3: {
+    eyebrow: "ROYAL EDITION",
+    title_html: "Sheetal — <em>my Queen</em>",
+    roman: "— MMXXVI · TURNING XXII —",
+    tag: "PORTRAIT NO. I",
+    quote_html: "<span class=\"accent\">Born</span> a queen,<br>still ruling <span class=\"accent\">every</span> moment of me.",
+    corner1: "GRACE",
+    corner2: "FIRE",
+    corner3: "SOUL",
+    corner4: "CHARM",
+    stat1_v: "∞", stat1_l: "LOVE",
+    stat2_v: "22", stat2_l: "YEARS",
+    stat3_v: "1", stat3_l: "QUEEN",
+    closing_h_html: "To my <em>Sheetal</em>,<br>the woman who owns my world",
+    closing_p_html: "Tum sirf meri girlfriend nahi —<br>tum meri kahaani ki <em>har sundar line</em> ho.",
+    seal: "SEALED IN GOLD · BY PRINCE"
+  },
+
+  page4: {
+    masthead_left: "VOL. 01",
+    masthead_center: "BIRTHDAY ISSUE",
+    masthead_right: "22 · 05 · 26",
+    masthead_title_html: "U<em>s</em>.",
+    meta_left: "Featuring · Sheetal",
+    meta_right: "By · Prince",
+    cover_label: "— THE COVER STORY —",
+    cover_h_html: "Sheetal — the girl who became <em>my whole year.</em>",
+    section1_num: "i.",
+    section1_ttl: "SIX MOMENTS · ONE STORY",
+    moment1_lbl_html: "FIRST<br>LOOK",
+    moment2_lbl_html: "GOLDEN<br>HOUR",
+    moment3_lbl_html: "WORK<br>DAYS",
+    moment4_lbl_html: "AT<br>EASE",
+    moment5_lbl_html: "YOUR<br>LAUGH",
+    moment6_lbl_html: "EVERY<br>LITTLE THING",
+    wide_cap: "— a soft afternoon, no plans, just Sheetal &amp; me.",
+    pullquote_html: "Tum mere life ka woh page ho jise main <em>baar baar padhna chahta hoon</em> — har lifetime, har subah.",
+    pullquote_attrib: "— EDITOR'S NOTE · PRINCE",
+    section2_num: "ii.",
+    section2_ttl: "CLOSING SPREAD",
+    footer_eyebrow: "— FROM THE EDITOR —",
+    footer_title_html: "Happy<br><em>Birthday,</em><br>Sheetal",
+    footer_sig: "— from Prince, the boy who is yours, always."
+  },
+
+  page5: {
+    eyebrow: "· A LOVE NOTE · FOR SHEETAL ·",
+    title: "You have my whole heart",
+    verse_html: "Har dhadkan, har saans, har <span class=\"em\">khwaab</span> —<br>sab tumhare naam, Sheetal.",
+    premium_cap: "forever &amp; ever",
+    premium_sub: "— YOURS, ALWAYS · PRINCE —",
+    glass_h: "To you, my Sheetal",
+    glass_p: "Tum mere dil ka woh kona ho jahan sirf <em>roshni</em> rehti hai — hamesha.",
+    glass_big: "happy birthday",
+    glass_sig: "— WITH ALL MY HEART · PRINCE —"
+  },
+
+  page6: {
+    hero_eyebrow: "— A LOVE LETTER · FOR SHEETAL —",
+    hero_h_html: "For the girl who made every <em>ordinary</em> day feel <em>extraordinary.</em>",
+    hero_intro: "This is a small story — not a grand one — about us. About all the little things that make Sheetal, Sheetal.",
+    hero_meta_left: "VOL · I",
+    hero_meta_right: "22 · 05 · 2026",
+    intro_p_html: "Some loves announce themselves loudly.<br><em>Ours</em> grew quietly — like sunlight, like morning chai, like home.",
+
+    ch1_lbl: "CHAPTER ONE",
+    ch1_h_html: "The first <em>hello.</em>",
+    ch1_desc: "Mujhe abhi tak yaad hai — pehli baar tumhe dekha tha, aur dil ne kaha tha: yeh wali special hai.",
+
+    ch2_lbl: "CHAPTER TWO",
+    ch2_h_html: "Slow afternoons,<br><em>endless</em> talks.",
+    ch2_desc: "Wo lambi baatein, wo silly jokes, wo chhote-chhote fights jo ek hug pe khatm ho jaate the — sab mere favourites.",
+
+    ch3_lbl: "CHAPTER THREE",
+    ch3_h_html: "Sheetal, in <em>every</em><br>kind of light.",
+    ch3_desc: "Subah ki dhoop mein, sham ki halki roshni mein — tum har frame mein sundar lagti ho. Har frame mein.",
+
+    ch4_lbl: "CHAPTER FOUR",
+    ch4_h_html: "The little<br><em>everydays.</em>",
+    ch4_desc: "Coffee, late-night calls, &ldquo;kya kar rahe ho&rdquo; texts — yehi to hain wo cheezein jo zindagi ko zindagi banati hain.",
+
+    ch5_lbl: "CHAPTER FIVE",
+    ch5_h_html: "And then,<br><em>still you.</em>",
+    ch5_desc: "Har year, har season, har mood — choice abhi bhi tum hi ho. Aur kal bhi tum hi rahogi.",
+
+    statement_small: "— TO PUT IT SIMPLY —",
+    statement_html: "Maine tumhe <em>har</em> roop mein pyaar kiya hai, Sheetal — aur har aaane wale roop mein bhi karta rahunga.",
+    final_eyebrow: "— THE LAST PAGE —",
+    final_h_html: "Happy<br><em>Birthday,</em><br>my Sheetal.",
+    final_by: "— forever Prince, the boy who looks at you that way.",
+    footer_p_html: "Tum mere har chapter ki <em>nayi shuruat</em> ho, aur har kahaani ka <em>sabse pyaara</em> ending.",
+    footer_by: "— YOURS, ALWAYS · PRINCE —"
+  }
+};
+
+// ───── Helpers for hydration script (don't edit below) ─────
+window.SITE_DEFAULTS = JSON.parse(JSON.stringify(window.SITE_DATA));

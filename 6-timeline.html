@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Love Letter — In Chapters · For Sheetal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --beige: #faf6f1; --cream: #fdfaf3;
+    --ink: #1c1410; --ink-soft: #4a3a30;
+    --muted: #8a7a6e;
+    --gold: #e8b87c; --gold-deep: #b8854a;
+    --paper: #ffffff;
+    --rule: rgba(28, 20, 16, 0.12);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { overflow-x: hidden; }
+  body {
+    background: var(--beige);
+    font-family: 'Inter Tight', sans-serif;
+    color: var(--ink); line-height: 1.5;
+  }
+  .wrapper { max-width: 480px; margin: 0 auto; background: var(--beige); }
+  .hero {
+    background: var(--ink); color: var(--cream);
+    padding: 60px 22px 70px; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute;
+    top: -20%; right: -10%;
+    width: 60%; height: 60%;
+    background: radial-gradient(circle, rgba(232, 184, 124, 0.15), transparent 70%);
+    pointer-events: none;
+  }
+  .hero .eyebrow {
+    font-size: 9px; letter-spacing: 6px;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 24px; font-weight: 500;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif; font-size: 50px;
+    line-height: 1; font-weight: 400;
+    letter-spacing: -1.5px; margin-bottom: 20px;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); font-weight: 300; }
+  .hero .intro {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 16px; line-height: 1.55;
+    color: rgba(253, 250, 243, 0.7);
+    font-weight: 300; max-width: 340px;
+  }
+  .hero .meta {
+    margin-top: 30px; display: flex; justify-content: space-between;
+    font-size: 8px; letter-spacing: 4px;
+    text-transform: uppercase; color: rgba(232, 184, 124, 0.7);
+  }
+  .light-intro { padding: 50px 24px 30px; text-align: center; }
+  .light-intro p {
+    font-family: 'Fraunces', serif; font-size: 19px;
+    line-height: 1.5; color: var(--ink-soft); font-weight: 300;
+  }
+  .light-intro p em { font-style: italic; color: var(--ink); }
+  .ornament {
+    text-align: center; color: var(--gold-deep);
+    font-size: 12px; letter-spacing: 10px; margin: 26px 0;
+  }
+  .timeline { padding: 0 22px 30px; }
+  .chapter {
+    display: flex; gap: 18px; margin-bottom: 36px; position: relative;
+  }
+  .chapter .marker {
+    display: flex; flex-direction: column; align-items: center;
+    flex-shrink: 0; padding-top: 4px;
+  }
+  .chapter .n {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 38px; line-height: 1; color: var(--gold-deep); font-weight: 400;
+  }
+  .chapter .line {
+    width: 1px; flex: 1;
+    background: linear-gradient(180deg, var(--gold), transparent);
+    margin-top: 10px;
+  }
+  .chapter:last-child .line { display: none; }
+  .chapter .body { flex: 1; min-width: 0; }
+  .chapter .pic {
+    width: 100%; aspect-ratio: 4 / 5;
+    overflow: hidden; margin-bottom: 14px;
+    box-shadow: 0 14px 30px rgba(28, 20, 16, 0.18);
+  }
+  .chapter .pic img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block; object-position: center 22%;
+    filter: contrast(1.03);
+    transition: transform .6s ease;
+  }
+  .chapter:hover .pic img { transform: scale(1.04); }
+  .chapter .lbl {
+    font-size: 9px; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--gold-deep);
+    font-weight: 500; margin-bottom: 6px;
+  }
+  .chapter h2 {
+    font-family: 'Fraunces', serif; font-size: 26px;
+    line-height: 1.1; font-weight: 400;
+    color: var(--ink); letter-spacing: -0.5px; margin-bottom: 10px;
+  }
+  .chapter h2 em { font-style: italic; color: var(--gold-deep); font-weight: 300; }
+  .chapter .desc {
+    font-family: 'Inter Tight', sans-serif; font-size: 14px;
+    line-height: 1.55; color: var(--ink-soft); font-weight: 400;
+  }
+  .statement {
+    background: var(--cream); padding: 60px 24px;
+    text-align: center; margin: 20px 0;
+    border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  }
+  .statement .small {
+    font-size: 9px; letter-spacing: 6px;
+    text-transform: uppercase; color: var(--gold-deep); margin-bottom: 18px;
+  }
+  .statement h2 {
+    font-family: 'Fraunces', serif; font-size: 32px;
+    line-height: 1.15; color: var(--ink);
+    font-weight: 400; letter-spacing: -1px;
+  }
+  .statement h2 em { font-style: italic; color: var(--gold-deep); font-weight: 300; }
+  .duo {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; padding: 0 14px 30px;
+  }
+  .duo .d { width: 100%; aspect-ratio: 3 / 4; overflow: hidden; }
+  .duo .d:nth-child(2) { margin-top: 30px; }
+  .duo img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block; object-position: center 22%;
+  }
+  .final { position: relative; height: 580px; overflow: hidden; }
+  .final img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block; object-position: center 18%;
+  }
+  .final::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg,
+      rgba(28, 20, 16, 0.15) 0%, rgba(28, 20, 16, 0.1) 40%,
+      rgba(28, 20, 16, 0.88) 100%);
+  }
+  .final .bottom {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 30px 24px; color: var(--cream); z-index: 2; text-align: center;
+  }
+  .final .bottom .e {
+    font-size: 9px; letter-spacing: 5px;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 14px;
+  }
+  .final .bottom h2 {
+    font-family: 'Fraunces', serif; font-size: 50px;
+    line-height: 0.95; font-weight: 400; letter-spacing: -1.5px;
+  }
+  .final .bottom h2 em { font-style: italic; color: var(--gold); font-weight: 300; }
+  .final .bottom .by {
+    margin-top: 16px; font-family: 'Fraunces', serif;
+    font-style: italic; font-size: 15px; color: rgba(253, 250, 243, 0.8);
+  }
+  .footer {
+    background: var(--ink); color: var(--cream);
+    padding: 40px 24px 50px; text-align: center;
+  }
+  .footer .mark {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 36px; color: var(--gold); line-height: 0.5; margin-bottom: 18px;
+  }
+  .footer p {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 16px; color: rgba(253, 250, 243, 0.78);
+    line-height: 1.55; font-weight: 300; margin-bottom: 22px;
+  }
+  .footer .by {
+    font-size: 9px; letter-spacing: 5px;
+    text-transform: uppercase; color: var(--gold);
+  }
+  .nav-row {
+    display: flex; justify-content: space-between;
+    background: var(--ink); padding: 16px 24px;
+    border-top: 1px solid rgba(232, 184, 124, 0.15);
+  }
+  .nav-row a {
+    font-family: 'Inter Tight', sans-serif; font-size: 9px;
+    letter-spacing: 5px; color: var(--gold);
+    text-decoration: none; text-transform: uppercase; padding: 8px;
+  }
+</style>
+</head>
+<body>
+  <div class="wrapper">
+
+    <section class="hero">
+      <div class="eyebrow" data-t="page6.hero_eyebrow">— A LOVE LETTER · FOR SHEETAL —</div>
+      <h1 data-t="page6.hero_h_html">For the girl who made every <em>ordinary</em> day feel <em>extraordinary.</em></h1>
+      <p class="intro" data-t="page6.hero_intro">
+        This is a small story — not a grand one — about us.
+        About all the little things that make Sheetal, Sheetal.
+      </p>
+      <div class="meta">
+        <span data-t="page6.hero_meta_left">VOL · I</span>
+        <span data-t="page6.hero_meta_right">22 · 05 · 2026</span>
+      </div>
+    </section>
+
+    <div class="light-intro">
+      <p data-t="page6.intro_p_html">
+        Some loves announce themselves loudly.<br>
+        <em>Ours</em> grew quietly — like sunlight, like morning chai, like home.
+      </p>
+    </div>
+
+    <div class="ornament">· ✦ ·</div>
+
+    <div class="timeline">
+      <div class="chapter">
+        <div class="marker"><div class="n">01</div><div class="line"></div></div>
+        <div class="body">
+          <div class="pic"><img src="images/28_sunny_house.jpg" alt="" data-img="p6_ch1"></div>
+          <div class="lbl" data-t="page6.ch1_lbl">CHAPTER ONE</div>
+          <h2 data-t="page6.ch1_h_html">The first <em>hello.</em></h2>
+          <p class="desc" data-t="page6.ch1_desc">
+            Mujhe abhi tak yaad hai — pehli baar tumhe dekha tha,
+            aur dil ne kaha tha: yeh wali special hai.
+          </p>
+        </div>
+      </div>
+
+      <div class="chapter">
+        <div class="marker"><div class="n">02</div><div class="line"></div></div>
+        <div class="body">
+          <div class="pic"><img src="images/29_food_court_couple.jpg" alt="" data-img="p6_ch2"></div>
+          <div class="lbl" data-t="page6.ch2_lbl">CHAPTER TWO</div>
+          <h2 data-t="page6.ch2_h_html">Slow afternoons,<br><em>endless</em> talks.</h2>
+          <p class="desc" data-t="page6.ch2_desc">
+            Wo lambi baatein, wo silly jokes, wo random fights jo
+            ek hug pe end hote the — sab mere favourites.
+          </p>
+        </div>
+      </div>
+
+      <div class="chapter">
+        <div class="marker"><div class="n">03</div><div class="line"></div></div>
+        <div class="body">
+          <div class="pic"><img src="images/30_food_court_solo.jpg" alt="" data-img="p6_ch3"></div>
+          <div class="lbl" data-t="page6.ch3_lbl">CHAPTER THREE</div>
+          <h2 data-t="page6.ch3_h_html">Sheetal, in <em>every</em><br>kind of light.</h2>
+          <p class="desc" data-t="page6.ch3_desc">
+            Subah ki dhoop mein, sham ki halki roshni mein —
+            tum har frame mein sundar lagti ho. Har frame mein.
+          </p>
+        </div>
+      </div>
+
+      <div class="chapter">
+        <div class="marker"><div class="n">04</div><div class="line"></div></div>
+        <div class="body">
+          <div class="pic"><img src="images/31_gray_jacket_solo.jpg" alt="" data-img="p6_ch4"></div>
+          <div class="lbl" data-t="page6.ch4_lbl">CHAPTER FOUR</div>
+          <h2 data-t="page6.ch4_h_html">The little<br><em>everydays.</em></h2>
+          <p class="desc" data-t="page6.ch4_desc">
+            Coffee, late-night calls, "kya kar rahe ho" texts —
+            yehi to hain wo cheezein jo life ko life banati hain.
+          </p>
+        </div>
+      </div>
+
+      <div class="chapter">
+        <div class="marker"><div class="n">05</div><div class="line"></div></div>
+        <div class="body">
+          <div class="pic"><img src="images/32_pout_couple.jpg" alt="" data-img="p6_ch5"></div>
+          <div class="lbl" data-t="page6.ch5_lbl">CHAPTER FIVE</div>
+          <h2 data-t="page6.ch5_h_html">And then,<br><em>still you.</em></h2>
+          <p class="desc" data-t="page6.ch5_desc">
+            Har year, har season, har mood — choice abhi bhi tum hi ho.
+            Aur kal bhi tum hi rahogi.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <section class="statement">
+      <div class="small" data-t="page6.statement_small">— TO PUT IT SIMPLY —</div>
+      <h2 data-t="page6.statement_html">
+        I have loved Sheetal in <em>every</em> version of herself — and
+        I will, in <em>every</em> next one.
+      </h2>
+    </section>
+
+    <div class="duo">
+      <div class="d"><img src="images/33_candy_smile.jpg" alt="" data-img="p6_duo1"></div>
+      <div class="d"><img src="images/34_kiss_pout.jpg" alt="" data-img="p6_duo2"></div>
+    </div>
+
+    <section class="final">
+      <img src="images/35_neon_store.jpg" alt="" data-img="p6_final">
+      <div class="bottom">
+        <div class="e" data-t="page6.final_eyebrow">— THE LAST PAGE —</div>
+        <h2 data-t="page6.final_h_html">Happy<br><em>Birthday,</em><br>my Sheetal.</h2>
+        <div class="by" data-t="page6.final_by">— forever Prince, the boy who looks at you that way.</div>
+      </div>
+    </section>
+
+    <div class="footer">
+      <div class="mark">"</div>
+      <p data-t="page6.footer_p_html">
+        Tum mere har chapter ki nayi shuruat ho,
+        aur har kahaani ka <em>sabse pyaara</em> ending.
+      </p>
+      <div class="by" data-t="page6.footer_by">— YOURS, ALWAYS · PRINCE —</div>
+    </div>
+
+    <div class="nav-row">
+      <a href="5-heart-mosaic.html">← BACK</a>
+      <a href="index.html">HOME →</a>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script src="gallery.js"></script>
+</body>
+</html>

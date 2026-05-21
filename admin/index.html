@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin · Birthday Site for Sheetal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e15;
+    --bg-2: #181722;
+    --bg-3: #21202d;
+    --panel: #161523;
+    --border: #2a2937;
+    --border-2: #3a3848;
+    --text: #e8e6f0;
+    --text-soft: #a8a5b8;
+    --text-dim: #6b6878;
+    --accent: #f06292;
+    --accent-soft: #f8a5c2;
+    --accent-bg: rgba(240, 98, 146, 0.1);
+    --success: #4ade80;
+    --warn: #fbbf24;
+    --info: #60a5fa;
+    --danger: #f87171;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--bg); color: var(--text); }
+  body {
+    font-family: 'Inter Tight', sans-serif;
+    line-height: 1.4;
+    font-size: 14px;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15, 14, 21, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 20px;
+    display: flex; align-items: center; gap: 16px;
+    flex-wrap: wrap;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 700; font-size: 16px;
+  }
+  .brand .dot { color: var(--accent); }
+  .brand small {
+    display: block; color: var(--text-soft);
+    font-weight: 400; font-size: 11px;
+  }
+  .actions {
+    margin-left: auto; display: flex; gap: 8px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    background: var(--bg-3); color: var(--text);
+    border: 1px solid var(--border-2);
+    padding: 8px 14px;
+    font-family: inherit; font-size: 12px;
+    font-weight: 500; letter-spacing: 0.3px;
+    border-radius: 6px; cursor: pointer;
+    transition: all .15s ease;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn:hover { background: var(--border-2); border-color: var(--text-dim); }
+  .btn.primary {
+    background: var(--accent); border-color: var(--accent); color: white;
+  }
+  .btn.primary:hover { background: var(--accent-soft); }
+  .btn.ghost { background: transparent; border-color: var(--border); }
+  .btn.danger { color: var(--danger); border-color: var(--border-2); }
+  .btn.danger:hover { background: rgba(248, 113, 113, 0.1); }
+  .status {
+    font-size: 11px; color: var(--text-dim);
+    padding: 5px 10px; border-radius: 4px;
+    background: var(--bg-3);
+    transition: all .2s ease;
+  }
+  .status.saved { color: var(--success); background: rgba(74, 222, 128, 0.1); }
+  .status.saving { color: var(--warn); background: rgba(251, 191, 36, 0.1); }
+
+  /* TABS */
+  .tabs {
+    position: sticky; top: 56px; z-index: 90;
+    background: var(--bg-2); border-bottom: 1px solid var(--border);
+    padding: 0 14px; overflow-x: auto; white-space: nowrap;
+    display: flex; gap: 2px;
+  }
+  .tabs::-webkit-scrollbar { height: 4px; }
+  .tabs::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 2px; }
+  .tab {
+    background: transparent; border: none;
+    color: var(--text-soft); font-family: inherit;
+    padding: 14px 16px; cursor: pointer;
+    font-size: 13px; font-weight: 500;
+    border-bottom: 2px solid transparent;
+    transition: all .15s ease;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--accent); border-color: var(--accent); }
+
+  /* MAIN */
+  main {
+    max-width: 980px; margin: 0 auto;
+    padding: 24px 20px 60px;
+  }
+  .page-section { display: none; }
+  .page-section.active { display: block; }
+  .section {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 18px; overflow: hidden;
+  }
+  .section h2 {
+    font-size: 13px; letter-spacing: 2px;
+    text-transform: uppercase; font-weight: 600;
+    padding: 14px 18px;
+    color: var(--text);
+    background: var(--bg-3);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section h2 .count {
+    background: var(--bg);
+    color: var(--text-dim); font-size: 10px;
+    padding: 2px 7px; border-radius: 999px;
+    letter-spacing: 0;
+  }
+  .section .body { padding: 14px 18px; }
+
+  /* FIELD */
+  .field { margin-bottom: 14px; }
+  .field:last-child { margin-bottom: 0; }
+  .field label {
+    display: block; font-size: 11px;
+    color: var(--text-soft);
+    margin-bottom: 6px; font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+  .field label .key {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-dim); font-size: 10px;
+    font-weight: 400; margin-left: 4px;
+  }
+  .field .ftag {
+    display: inline-block; font-size: 9px;
+    padding: 1px 6px; border-radius: 3px;
+    background: var(--bg-3); color: var(--text-dim);
+    letter-spacing: 0.5px; margin-left: 4px;
+    text-transform: uppercase;
+  }
+  .field .ftag.html { background: rgba(96, 165, 250, 0.15); color: var(--info); }
+  .field input[type="text"], .field textarea {
+    width: 100%; background: var(--bg);
+    border: 1px solid var(--border-2);
+    color: var(--text); padding: 9px 12px;
+    font-family: inherit; font-size: 13px;
+    border-radius: 6px; resize: vertical;
+    transition: border-color .15s ease;
+  }
+  .field input[type="text"]:focus, .field textarea:focus {
+    outline: none; border-color: var(--accent);
+  }
+  .field textarea { min-height: 72px; line-height: 1.5; }
+  .field.changed input, .field.changed textarea {
+    border-left: 3px solid var(--accent);
+  }
+
+  /* IMAGE GRID */
+  .img-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+  }
+  .img-card {
+    background: var(--bg); border: 1px solid var(--border-2);
+    border-radius: 8px; padding: 10px;
+    display: flex; gap: 10px;
+    transition: border-color .15s ease;
+  }
+  .img-card.changed { border-color: var(--accent); }
+  .img-card .thumb {
+    flex-shrink: 0; width: 76px; height: 96px;
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    border-radius: 4px; overflow: hidden;
+    cursor: pointer;
+    position: relative;
+  }
+  .img-card .thumb img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block;
+    background: #0a0a14;
+  }
+  .img-card .thumb:hover::after {
+    content: 'change'; position: absolute;
+    inset: 0; background: rgba(0,0,0,0.6);
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 10px;
+    letter-spacing: 2px; text-transform: uppercase;
+  }
+  .img-card .meta {
+    flex: 1; min-width: 0;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .img-card .slot {
+    font-size: 11px; color: var(--text-soft);
+    font-weight: 500;
+  }
+  .img-card .slot .key {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--text-dim); margin-left: 4px;
+  }
+  .img-card select {
+    background: var(--bg); border: 1px solid var(--border-2);
+    color: var(--text); padding: 5px 8px;
+    font-family: inherit; font-size: 11px;
+    border-radius: 4px; width: 100%;
+  }
+  .img-card select:focus { outline: none; border-color: var(--accent); }
+  .pos-row { display: flex; gap: 4px; align-items: center; }
+  .pos-row input {
+    flex: 1; background: var(--bg); border: 1px solid var(--border-2);
+    color: var(--text); padding: 4px 7px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    border-radius: 4px;
+  }
+  .pos-row input:focus { outline: none; border-color: var(--accent); }
+  .pos-row .pos-presets {
+    display: flex; gap: 2px;
+  }
+  .pos-row .pos-presets button {
+    background: var(--bg-3); border: 1px solid var(--border-2);
+    color: var(--text-soft); font-family: inherit;
+    font-size: 9px; padding: 3px 5px;
+    border-radius: 3px; cursor: pointer;
+    transition: all .15s ease;
+  }
+  .pos-row .pos-presets button:hover {
+    background: var(--accent); color: white;
+    border-color: var(--accent);
+  }
+
+  /* IMG PICKER MODAL */
+  .modal-bg {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    z-index: 200;
+    display: none;
+    align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .modal-bg.show { display: flex; }
+  .modal {
+    background: var(--panel);
+    border: 1px solid var(--border-2);
+    border-radius: 12px;
+    max-width: 700px; width: 100%;
+    max-height: 85vh;
+    display: flex; flex-direction: column;
+  }
+  .modal-head {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .modal-head h3 { font-size: 14px; font-weight: 600; }
+  .modal-head button {
+    background: transparent; border: none;
+    color: var(--text-soft); font-family: inherit;
+    font-size: 20px; cursor: pointer; line-height: 1;
+  }
+  .modal-toolbar {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; gap: 8px; align-items: center;
+    flex-wrap: wrap;
+    background: var(--bg-2);
+  }
+  .upload-btn {
+    background: var(--accent); color: white;
+    padding: 7px 14px; border-radius: 6px;
+    font-size: 12px; font-weight: 500;
+    cursor: pointer; border: none;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: background .15s ease;
+    white-space: nowrap;
+  }
+  .upload-btn:hover { background: var(--accent-soft); }
+  .upload-btn input { display: none; }
+  .modal-toolbar .filter-row {
+    display: flex; gap: 8px; align-items: center;
+    width: 100%; margin-top: 8px;
+  }
+  .modal-toolbar .search-input {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border-2);
+    color: var(--text);
+    padding: 6px 10px;
+    font-family: inherit; font-size: 12px;
+    border-radius: 5px;
+  }
+  .modal-toolbar .search-input:focus {
+    outline: none; border-color: var(--accent);
+  }
+  .modal-toolbar .filter-chips {
+    display: flex; gap: 4px;
+  }
+  .filter-chip {
+    background: var(--bg-3); border: 1px solid var(--border-2);
+    color: var(--text-soft); padding: 4px 9px;
+    border-radius: 999px; font-size: 10px;
+    cursor: pointer; white-space: nowrap;
+    transition: all .15s ease;
+    letter-spacing: 0.3px;
+  }
+  .filter-chip.active {
+    background: var(--accent); color: white;
+    border-color: var(--accent);
+  }
+  .modal-toolbar .count-badge {
+    font-size: 10px; color: var(--text-dim);
+    padding: 3px 8px; border-radius: 4px;
+    background: var(--bg-3);
+    letter-spacing: 0.5px;
+  }
+  .section-divider {
+    grid-column: 1 / -1;
+    padding: 12px 4px 6px;
+    font-size: 10px; letter-spacing: 2px;
+    color: var(--text-soft); text-transform: uppercase;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+    margin-top: 4px;
+  }
+  .section-divider:first-child { margin-top: 0; padding-top: 0; }
+  .section-divider .count {
+    color: var(--text-dim); font-weight: 400;
+    margin-left: 6px;
+  }
+  /* (uploads-section styles removed — replaced with inline section dividers in modal-body) */
+  .modal-body {
+    padding: 14px 16px; overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-auto-rows: min-content;
+    gap: 10px;
+    background: var(--bg);
+    flex: 1; min-height: 0;
+  }
+  .pick-tile {
+    border: 2px solid transparent;
+    border-radius: 8px; overflow: hidden;
+    cursor: pointer;
+    background: #0a0a14;
+    aspect-ratio: 3 / 4; position: relative;
+    transition: all .15s ease;
+  }
+  .pick-tile:hover { transform: scale(1.03); border-color: var(--border-2); }
+  .pick-tile.current { border-color: var(--accent); }
+  .pick-tile.current::after {
+    content: '✓'; position: absolute;
+    top: 6px; right: 6px;
+    background: var(--accent); color: white;
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    z-index: 2;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  }
+  .pick-tile img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 18%;
+    display: block;
+  }
+  .pick-tile .label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 5px 7px; font-size: 10px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.85));
+    color: white;
+    text-align: center;
+    line-height: 1.2;
+    text-transform: capitalize;
+  }
+  .pick-tile.upload-tile .label {
+    background: linear-gradient(transparent, rgba(240, 98, 146, 0.95));
+    text-transform: uppercase; letter-spacing: 1.5px;
+    font-weight: 600;
+  }
+  .pick-tile .del-btn {
+    position: absolute; top: 6px; left: 6px;
+    background: rgba(248, 113, 113, 0.95); color: white;
+    width: 22px; height: 22px; border-radius: 50%;
+    border: none; cursor: pointer; font-size: 13px;
+    display: none; align-items: center; justify-content: center;
+    z-index: 3; font-weight: 700;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  }
+  .pick-tile.upload-tile:hover .del-btn { display: flex; }
+
+  /* INFO BOX */
+  .info-box {
+    background: rgba(96, 165, 250, 0.08);
+    border: 1px solid rgba(96, 165, 250, 0.2);
+    border-radius: 8px; padding: 14px 16px;
+    margin-bottom: 20px;
+    font-size: 13px; color: var(--text-soft);
+    line-height: 1.55;
+  }
+  .info-box strong { color: var(--info); }
+  .info-box ul { margin: 6px 0 0 20px; }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 20px; left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--panel);
+    border: 1px solid var(--border-2);
+    color: var(--text); padding: 10px 18px;
+    border-radius: 8px; font-size: 13px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    opacity: 0; transition: all .25s ease;
+    z-index: 300; pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast.success { border-color: var(--success); color: var(--success); }
+  .toast.error { border-color: var(--danger); color: var(--danger); }
+
+  @media (max-width: 600px) {
+    .topbar { flex-direction: column; align-items: stretch; }
+    .actions { width: 100%; }
+    .img-card { flex-direction: column; }
+    .img-card .thumb { width: 100%; height: 160px; }
+  }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand">
+      <span class="dot">●</span>
+      <div>
+        Birthday Site Admin
+        <small>edit text · swap photos · fix cropping</small>
+      </div>
+    </div>
+    <div class="actions">
+      <span class="status saved" id="status">Saved</span>
+      <a href="../index.html" target="_blank" class="btn ghost">↗ Open Site</a>
+      <button class="btn danger" id="btn-reset">Reset All</button>
+      <button class="btn primary" id="btn-export">↓ Download data.js</button>
+    </div>
+  </div>
+
+  <nav class="tabs" id="tabs"></nav>
+
+  <main id="main"></main>
+
+  <!-- Image picker modal -->
+  <div class="modal-bg" id="modal">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>Choose a photo</h3>
+        <button id="modal-close">✕</button>
+      </div>
+      <div class="modal-toolbar">
+        <label class="upload-btn">
+          <input type="file" id="upload-input" accept="image/*" multiple>
+          + Upload Photos
+        </label>
+        <span class="count-badge" id="picker-count">0 photos</span>
+        <div class="filter-row">
+          <input type="text" class="search-input" id="picker-search" placeholder="🔍 Search photos…">
+          <div class="filter-chips">
+            <button class="filter-chip active" data-filter="all">All</button>
+            <button class="filter-chip" data-filter="uploads">⬆ Uploads</button>
+            <button class="filter-chip" data-filter="curated">⭐ Curated</button>
+            <button class="filter-chip" data-filter="pool">📂 Pool</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="../data.js"></script>
+  <script>
+  (function () {
+    "use strict";
+
+    // ====== LocalStorage helpers ======
+    const LS_KEY = "birthdaySiteOverrides_v1";
+    const LS_UPLOADS = "birthdaySite_uploads_v1";
+    const loadOv = () => {
+      try { return JSON.parse(localStorage.getItem(LS_KEY) || "{}"); }
+      catch (e) { return {}; }
+    };
+    const saveOv = (obj) => {
+      try { localStorage.setItem(LS_KEY, JSON.stringify(obj)); return true; }
+      catch (e) { return false; }
+    };
+    const clearOv = () => localStorage.removeItem(LS_KEY);
+    const loadUploads = () => {
+      try { return JSON.parse(localStorage.getItem(LS_UPLOADS) || "{}"); }
+      catch (e) { return {}; }
+    };
+    const saveUploads = (obj) => {
+      try {
+        localStorage.setItem(LS_UPLOADS, JSON.stringify(obj));
+        return true;
+      } catch (e) {
+        return false;
+      }
+    };
+
+    // Resolve an image name into a usable src URL
+    const resolveImg = (name) => {
+      if (!name) return null;
+      if (typeof name !== "string") return null;
+      if (name.startsWith("data:")) return name;
+      if (name.startsWith("upload_")) {
+        const ups = loadUploads();
+        return ups[name] || null;
+      }
+      return "../images/" + name;
+    };
+
+    const deepGet = (o, p) => p.split(".").reduce((x, k) => (x == null ? undefined : x[k]), o);
+    const deepSet = (o, p, v) => {
+      const ks = p.split(".");
+      let cur = o;
+      for (let i = 0; i < ks.length - 1; i++) {
+        if (cur[ks[i]] == null || typeof cur[ks[i]] !== "object") cur[ks[i]] = {};
+        cur = cur[ks[i]];
+      }
+      cur[ks[ks.length - 1]] = v;
+    };
+    const deepUnset = (o, p) => {
+      const ks = p.split(".");
+      let cur = o;
+      for (let i = 0; i < ks.length - 1; i++) {
+        if (!cur[ks[i]]) return;
+        cur = cur[ks[i]];
+      }
+      delete cur[ks[ks.length - 1]];
+    };
+
+    const DEFAULTS = window.SITE_DEFAULTS;
+    let OV = loadOv();
+
+    // ====== Schema: pages, text fields, image slots ======
+    const PAGES = [
+      { id: "identity", label: "Identity" },
+      { id: "index", label: "Index" },
+      { id: "page1", label: "01 · Card" },
+      { id: "page2", label: "02 · Memories" },
+      { id: "page3", label: "03 · Queen" },
+      { id: "page4", label: "04 · Magazine" },
+      { id: "page5", label: "05 · Heart" },
+      { id: "page6", label: "06 · Timeline" }
+    ];
+
+    const TEXT_SCHEMA = {
+      identity: [
+        { key: "meta.her_name", label: "Her name (Sheetal)" },
+        { key: "meta.his_name", label: "His full name" },
+        { key: "meta.his_short", label: "His short name (signature)" },
+        { key: "meta.age", label: "Age" },
+        { key: "meta.date_display", label: "Date display" },
+        { key: "meta.dob_display", label: "DOB display" }
+      ],
+      index: [
+        { key: "index.eyebrow", label: "Eyebrow" },
+        { key: "index.title_html", label: "Main title", area: true },
+        { key: "index.sub_html", label: "Subtitle", area: true },
+        { key: "index.intro_html", label: "Intro quote", area: true },
+        { key: "index.card1_title_html", label: "Card 1 — Title" },
+        { key: "index.card1_desc", label: "Card 1 — Desc" },
+        { key: "index.card2_title_html", label: "Card 2 — Title" },
+        { key: "index.card2_desc", label: "Card 2 — Desc" },
+        { key: "index.card3_title_html", label: "Card 3 — Title" },
+        { key: "index.card3_desc", label: "Card 3 — Desc" },
+        { key: "index.card4_title_html", label: "Card 4 — Title" },
+        { key: "index.card4_desc", label: "Card 4 — Desc" },
+        { key: "index.card5_title_html", label: "Card 5 — Title" },
+        { key: "index.card5_desc", label: "Card 5 — Desc" },
+        { key: "index.card6_title_html", label: "Card 6 — Title" },
+        { key: "index.card6_desc", label: "Card 6 — Desc" },
+        { key: "index.footer_quote_html", label: "Footer quote", area: true },
+        { key: "index.footer_sig", label: "Footer signature" }
+      ],
+      page1: [
+        { key: "page1.eyebrow", label: "Eyebrow / Date" },
+        { key: "page1.title", label: "Big title" },
+        { key: "page1.subtitle", label: "Subtitle" },
+        { key: "page1.message_label", label: "Card label" },
+        { key: "page1.message1_html", label: "Message 1", area: true },
+        { key: "page1.message2_html", label: "Message 2", area: true },
+        { key: "page1.closing", label: "Closing line" },
+        { key: "page1.signature_label", label: "Signature label" },
+        { key: "page1.signature", label: "Signature name" }
+      ],
+      page2: [
+        { key: "page2.stamp", label: "Stamp text" },
+        { key: "page2.header_small", label: "Header small" },
+        { key: "page2.header_title_html", label: "Header title" },
+        { key: "page2.header_sub", label: "Header subtitle" },
+        { key: "page2.cap1", label: "Caption 1" },
+        { key: "page2.cap2", label: "Caption 2" },
+        { key: "page2.cap_feature", label: "Caption — feature" },
+        { key: "page2.cap_b1", label: "Caption 3" },
+        { key: "page2.cap_b2", label: "Caption 4" },
+        { key: "page2.cap_tilt", label: "Caption — tilt" },
+        { key: "page2.cap_c1", label: "Caption 5" },
+        { key: "page2.cap_c2", label: "Caption 6" },
+        { key: "page2.scribble1_html", label: "Scribble 1", area: true },
+        { key: "page2.scribble2_html", label: "Scribble 2", area: true },
+        { key: "page2.scribble3_html", label: "Scribble 3", area: true },
+        { key: "page2.ticket_small", label: "Ticket small" },
+        { key: "page2.ticket_big", label: "Ticket big" },
+        { key: "page2.ticket_meta", label: "Ticket meta" },
+        { key: "page2.closing", label: "Closing" }
+      ],
+      page3: [
+        { key: "page3.eyebrow", label: "Eyebrow" },
+        { key: "page3.title_html", label: "Main title" },
+        { key: "page3.roman", label: "Roman/year line" },
+        { key: "page3.tag", label: "Portrait tag" },
+        { key: "page3.quote_html", label: "Main quote", area: true },
+        { key: "page3.corner1", label: "Gallery tag 1" },
+        { key: "page3.corner2", label: "Gallery tag 2" },
+        { key: "page3.corner3", label: "Gallery tag 3" },
+        { key: "page3.corner4", label: "Gallery tag 4" },
+        { key: "page3.stat1_v", label: "Stat 1 value" },
+        { key: "page3.stat1_l", label: "Stat 1 label" },
+        { key: "page3.stat2_v", label: "Stat 2 value" },
+        { key: "page3.stat2_l", label: "Stat 2 label" },
+        { key: "page3.stat3_v", label: "Stat 3 value" },
+        { key: "page3.stat3_l", label: "Stat 3 label" },
+        { key: "page3.closing_h_html", label: "Closing title", area: true },
+        { key: "page3.closing_p_html", label: "Closing paragraph", area: true },
+        { key: "page3.seal", label: "Seal text" }
+      ],
+      page4: [
+        { key: "page4.masthead_left", label: "Masthead left" },
+        { key: "page4.masthead_center", label: "Masthead center" },
+        { key: "page4.masthead_right", label: "Masthead right" },
+        { key: "page4.masthead_title_html", label: "Masthead title" },
+        { key: "page4.meta_left", label: "Meta left" },
+        { key: "page4.meta_right", label: "Meta right" },
+        { key: "page4.cover_label", label: "Cover label" },
+        { key: "page4.cover_h_html", label: "Cover headline", area: true },
+        { key: "page4.section1_num", label: "Section 1 num" },
+        { key: "page4.section1_ttl", label: "Section 1 title" },
+        { key: "page4.moment1_lbl_html", label: "Moment 1 label" },
+        { key: "page4.moment2_lbl_html", label: "Moment 2 label" },
+        { key: "page4.moment3_lbl_html", label: "Moment 3 label" },
+        { key: "page4.moment4_lbl_html", label: "Moment 4 label" },
+        { key: "page4.moment5_lbl_html", label: "Moment 5 label" },
+        { key: "page4.moment6_lbl_html", label: "Moment 6 label" },
+        { key: "page4.wide_cap", label: "Wide caption" },
+        { key: "page4.pullquote_html", label: "Pull quote", area: true },
+        { key: "page4.pullquote_attrib", label: "Pull quote attrib" },
+        { key: "page4.section2_num", label: "Section 2 num" },
+        { key: "page4.section2_ttl", label: "Section 2 title" },
+        { key: "page4.footer_eyebrow", label: "Footer eyebrow" },
+        { key: "page4.footer_title_html", label: "Footer title", area: true },
+        { key: "page4.footer_sig", label: "Footer signature" }
+      ],
+      page5: [
+        { key: "page5.eyebrow", label: "Eyebrow" },
+        { key: "page5.title", label: "Big title" },
+        { key: "page5.verse_html", label: "Verse", area: true },
+        { key: "page5.premium_cap", label: "Premium caption" },
+        { key: "page5.premium_sub", label: "Premium sub" },
+        { key: "page5.glass_h", label: "Glass card title" },
+        { key: "page5.glass_p", label: "Glass card paragraph", area: true },
+        { key: "page5.glass_big", label: "Glass card big text" },
+        { key: "page5.glass_sig", label: "Glass card signature" }
+      ],
+      page6: [
+        { key: "page6.hero_eyebrow", label: "Hero eyebrow" },
+        { key: "page6.hero_h_html", label: "Hero headline", area: true },
+        { key: "page6.hero_intro", label: "Hero intro", area: true },
+        { key: "page6.hero_meta_left", label: "Hero meta left" },
+        { key: "page6.hero_meta_right", label: "Hero meta right" },
+        { key: "page6.intro_p_html", label: "Intro paragraph", area: true },
+        { key: "page6.ch1_lbl", label: "Ch.1 label" },
+        { key: "page6.ch1_h_html", label: "Ch.1 title" },
+        { key: "page6.ch1_desc", label: "Ch.1 description", area: true },
+        { key: "page6.ch2_lbl", label: "Ch.2 label" },
+        { key: "page6.ch2_h_html", label: "Ch.2 title" },
+        { key: "page6.ch2_desc", label: "Ch.2 description", area: true },
+        { key: "page6.ch3_lbl", label: "Ch.3 label" },
+        { key: "page6.ch3_h_html", label: "Ch.3 title" },
+        { key: "page6.ch3_desc", label: "Ch.3 description", area: true },
+        { key: "page6.ch4_lbl", label: "Ch.4 label" },
+        { key: "page6.ch4_h_html", label: "Ch.4 title" },
+        { key: "page6.ch4_desc", label: "Ch.4 description", area: true },
+        { key: "page6.ch5_lbl", label: "Ch.5 label" },
+        { key: "page6.ch5_h_html", label: "Ch.5 title" },
+        { key: "page6.ch5_desc", label: "Ch.5 description", area: true },
+        { key: "page6.statement_small", label: "Statement small" },
+        { key: "page6.statement_html", label: "Statement", area: true },
+        { key: "page6.final_eyebrow", label: "Final eyebrow" },
+        { key: "page6.final_h_html", label: "Final headline", area: true },
+        { key: "page6.final_by", label: "Final byline" },
+        { key: "page6.footer_p_html", label: "Footer paragraph", area: true },
+        { key: "page6.footer_by", label: "Footer byline" }
+      ]
+    };
+
+    const IMAGE_SCHEMA = {
+      identity: [],
+      index: [],
+      page1: [
+        { key: "p1_hero", label: "Hero photo" },
+        { key: "p1_strip1", label: "Strip 1" },
+        { key: "p1_strip2", label: "Strip 2" },
+        { key: "p1_strip3", label: "Strip 3" }
+      ],
+      page2: [
+        { key: "p2_a1", label: "Row 1 — left" },
+        { key: "p2_a2", label: "Row 1 — right" },
+        { key: "p2_feature", label: "Feature (big)" },
+        { key: "p2_b1", label: "Row 2 — left" },
+        { key: "p2_b2", label: "Row 2 — right" },
+        { key: "p2_tilt", label: "Tilted single" },
+        { key: "p2_c1", label: "Row 3 — left" },
+        { key: "p2_c2", label: "Row 3 — right" }
+      ],
+      page3: [
+        { key: "p3_feature", label: "Feature photo" },
+        { key: "p3_g1", label: "Gallery — Grace" },
+        { key: "p3_g2", label: "Gallery — Fire" },
+        { key: "p3_g3", label: "Gallery — Soul" },
+        { key: "p3_g4", label: "Gallery — Charm" }
+      ],
+      page4: [
+        { key: "p4_cover", label: "Cover (big)" },
+        { key: "p4_m1", label: "Moment 1" },
+        { key: "p4_m2", label: "Moment 2" },
+        { key: "p4_m3", label: "Moment 3" },
+        { key: "p4_m4", label: "Moment 4" },
+        { key: "p4_m5", label: "Moment 5" },
+        { key: "p4_m6", label: "Moment 6" },
+        { key: "p4_wide", label: "Wide hero" },
+        { key: "p4_close1", label: "Closing left" },
+        { key: "p4_close2", label: "Closing right" }
+      ],
+      page5: [
+        // Heart mosaic — 26 photo slots
+        { key: "p5_r1c2", label: "Heart R1 · A" },
+        { key: "p5_r1c3", label: "Heart R1 · B" },
+        { key: "p5_r1c5", label: "Heart R1 · C" },
+        { key: "p5_r1c6", label: "Heart R1 · D" },
+        { key: "p5_r2c1", label: "Heart R2 · A" },
+        { key: "p5_r2c2", label: "Heart R2 · B" },
+        { key: "p5_r2c3", label: "Heart R2 · C" },
+        { key: "p5_r2c4", label: "Heart R2 · D" },
+        { key: "p5_r2c5", label: "Heart R2 · E" },
+        { key: "p5_r2c6", label: "Heart R2 · F" },
+        { key: "p5_r2c7", label: "Heart R2 · G" },
+        { key: "p5_r3c1", label: "Heart R3 · A" },
+        { key: "p5_r3c2", label: "Heart R3 · B" },
+        { key: "p5_r3c3", label: "Heart R3 · C" },
+        { key: "p5_r3c5", label: "Heart R3 · D" },
+        { key: "p5_r3c6", label: "Heart R3 · E" },
+        { key: "p5_r3c7", label: "Heart R3 · F" },
+        { key: "p5_r4c2", label: "Heart R4 · A" },
+        { key: "p5_r4c3", label: "Heart R4 · B" },
+        { key: "p5_r4c4", label: "Heart R4 · C" },
+        { key: "p5_r4c5", label: "Heart R4 · D" },
+        { key: "p5_r4c6", label: "Heart R4 · E" },
+        { key: "p5_r5c3", label: "Heart R5 · A" },
+        { key: "p5_r5c4", label: "Heart R5 · B" },
+        { key: "p5_r5c5", label: "Heart R5 · C" },
+        { key: "p5_r6c4", label: "Heart R6 · A (point)" },
+        { key: "p5_premium", label: "Premium card" },
+        { key: "p5_arch1", label: "Arch 1" },
+        { key: "p5_arch2", label: "Arch 2" },
+        { key: "p5_arch3", label: "Arch 3" }
+      ],
+      page6: [
+        { key: "p6_ch1", label: "Chapter 1" },
+        { key: "p6_ch2", label: "Chapter 2" },
+        { key: "p6_ch3", label: "Chapter 3" },
+        { key: "p6_ch4", label: "Chapter 4" },
+        { key: "p6_ch5", label: "Chapter 5" },
+        { key: "p6_duo1", label: "Duo — left" },
+        { key: "p6_duo2", label: "Duo — right" },
+        { key: "p6_final", label: "Final (big)" }
+      ]
+    };
+
+    const AVAILABLE_IMGS = DEFAULTS.available_images || [];
+
+    // ====== Status / Toast ======
+    const statusEl = document.getElementById("status");
+    let statusTimer = null;
+    const setStatus = (state, text) => {
+      statusEl.className = "status " + state;
+      statusEl.textContent = text;
+      if (state === "saving") {
+        clearTimeout(statusTimer);
+        statusTimer = setTimeout(() => setStatus("saved", "Saved"), 600);
+      }
+    };
+    const toast = (msg, kind) => {
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.className = "toast " + (kind || "") + " show";
+      clearTimeout(t._timer);
+      t._timer = setTimeout(() => t.classList.remove("show"), 2400);
+    };
+
+    // ====== Get/Set with overrides ======
+    const getVal = (path) => {
+      const ov = deepGet(OV, path);
+      if (ov !== undefined) return ov;
+      return deepGet(DEFAULTS, path);
+    };
+    const setVal = (path, val) => {
+      const def = deepGet(DEFAULTS, path);
+      if (val === def || val === undefined || val === null || val === "") {
+        // Same as default? remove override
+        if (val === def || val === "") {
+          deepUnset(OV, path);
+        } else {
+          deepSet(OV, path, val);
+        }
+      } else {
+        deepSet(OV, path, val);
+      }
+      setStatus("saving", "Saving…");
+      saveOv(OV);
+    };
+
+    // ====== Render fields ======
+    const renderTextField = (item) => {
+      const isHtml = item.key.endsWith("_html");
+      const wrap = document.createElement("div");
+      wrap.className = "field";
+      if (deepGet(OV, item.key) !== undefined) wrap.classList.add("changed");
+
+      const label = document.createElement("label");
+      label.innerHTML = `${item.label}${isHtml ? '<span class="ftag html">HTML</span>' : ""}<span class="key">${item.key}</span>`;
+      wrap.appendChild(label);
+
+      const cur = getVal(item.key) || "";
+      const input = document.createElement(item.area ? "textarea" : "input");
+      if (!item.area) input.type = "text";
+      input.value = cur;
+      input.dataset.key = item.key;
+      if (item.area) input.rows = Math.max(2, Math.ceil(cur.length / 60));
+      input.addEventListener("input", (e) => {
+        setVal(item.key, e.target.value);
+        if (deepGet(OV, item.key) !== undefined) wrap.classList.add("changed");
+        else wrap.classList.remove("changed");
+      });
+      wrap.appendChild(input);
+      return wrap;
+    };
+
+    const renderImageCard = (slot) => {
+      const card = document.createElement("div");
+      card.className = "img-card";
+      const imgKey = "images." + slot.key;
+      const posKey = "image_positions." + slot.key;
+      const isChanged = deepGet(OV, imgKey) !== undefined || deepGet(OV, posKey) !== undefined;
+      if (isChanged) card.classList.add("changed");
+
+      const curImg = getVal(imgKey) || AVAILABLE_IMGS[0];
+      const curPos = getVal(posKey) || "center 25%";
+
+      // Thumb
+      const thumb = document.createElement("div");
+      thumb.className = "thumb";
+      const thumbImg = document.createElement("img");
+      thumbImg.src = resolveImg(curImg) || "";
+      thumbImg.style.objectPosition = curPos;
+      thumb.appendChild(thumbImg);
+      thumb.addEventListener("click", () => openPicker(slot.key, (file) => {
+        setVal(imgKey, file);
+        thumbImg.src = resolveImg(file) || "";
+        // Refresh select (may include new uploads)
+        rebuildSelectOptions(select, file);
+        card.classList.add("changed");
+      }));
+      card.appendChild(thumb);
+
+      // Meta
+      const meta = document.createElement("div");
+      meta.className = "meta";
+
+      const slotLabel = document.createElement("div");
+      slotLabel.className = "slot";
+      slotLabel.innerHTML = `${slot.label}<span class="key">${slot.key}</span>`;
+      meta.appendChild(slotLabel);
+
+      // Image select — combined defaults + uploads
+      const select = document.createElement("select");
+      rebuildSelectOptions(select, curImg);
+      select.addEventListener("change", (e) => {
+        setVal(imgKey, e.target.value);
+        thumbImg.src = resolveImg(e.target.value) || "";
+        card.classList.add("changed");
+      });
+      meta.appendChild(select);
+
+      // Position
+      const posRow = document.createElement("div");
+      posRow.className = "pos-row";
+      const posInput = document.createElement("input");
+      posInput.type = "text"; posInput.value = curPos;
+      posInput.placeholder = "object-position";
+      posInput.addEventListener("input", (e) => {
+        setVal(posKey, e.target.value);
+        thumbImg.style.objectPosition = e.target.value;
+        card.classList.add("changed");
+      });
+      const presets = document.createElement("div");
+      presets.className = "pos-presets";
+      [["↑","center 12%"],["•","center 25%"],["↕","center 50%"],["↓","center 75%"]].forEach(([t, v]) => {
+        const b = document.createElement("button");
+        b.textContent = t; b.title = v;
+        b.addEventListener("click", () => {
+          posInput.value = v;
+          setVal(posKey, v);
+          thumbImg.style.objectPosition = v;
+          card.classList.add("changed");
+        });
+        presets.appendChild(b);
+      });
+      posRow.appendChild(posInput);
+      posRow.appendChild(presets);
+      meta.appendChild(posRow);
+
+      card.appendChild(meta);
+      return card;
+    };
+
+    // ====== Image picker modal ======
+    const modal = document.getElementById("modal");
+    const modalBody = document.getElementById("modal-body");
+    const pickerCount = document.getElementById("picker-count");
+    const searchInput = document.getElementById("picker-search");
+    let pickerCb = null;
+    let currentSlot = null;
+    let currentFilter = "all";    // all | uploads | curated | pool
+    let currentSearch = "";
+
+    // Build the combined list of available images: defaults + uploaded, with type tags
+    const getAllPhotos = () => {
+      const ups = loadUploads();
+      const uploadKeys = Object.keys(ups);
+      const photos = [];
+      uploadKeys.slice().reverse().forEach((k) => {
+        photos.push({ key: k, type: "upload", label: "Uploaded" });
+      });
+      (AVAILABLE_IMGS || []).forEach((f) => {
+        const isPool = f.startsWith("pool_");
+        const label = f.replace(/^\d+_/, "")
+                       .replace(/^pool_/, "#")
+                       .replace(/\.(jpg|jpeg|png)$/i, "")
+                       .replace(/_/g, " ");
+        photos.push({ key: f, type: isPool ? "pool" : "curated", label });
+      });
+      return photos;
+    };
+
+    const renderPickerTile = (photo, curImg) => {
+      const isUpload = photo.type === "upload";
+      const tile = document.createElement("div");
+      tile.className = "pick-tile" + (isUpload ? " upload-tile" : "") + (photo.key === curImg ? " current" : "");
+      const img = document.createElement("img");
+      img.src = isUpload ? (resolveImg(photo.key) || "") : ("../images/" + photo.key);
+      img.loading = "lazy";
+      const lbl = document.createElement("div");
+      lbl.className = "label";
+      lbl.textContent = photo.label;
+      tile.appendChild(img); tile.appendChild(lbl);
+      if (isUpload) {
+        const del = document.createElement("button");
+        del.className = "del-btn"; del.textContent = "×";
+        del.title = "Delete this upload";
+        del.addEventListener("click", (e) => {
+          e.stopPropagation();
+          if (!confirm("Delete this uploaded photo?")) return;
+          const ups = loadUploads();
+          delete ups[photo.key];
+          saveUploads(ups);
+          refreshPicker();
+        });
+        tile.appendChild(del);
+      }
+      tile.addEventListener("click", () => {
+        if (pickerCb) pickerCb(photo.key);
+        closeModal();
+      });
+      return tile;
+    };
+
+    const renderPickerSection = (title, photos, curImg) => {
+      if (photos.length === 0) return [];
+      const elements = [];
+      const divider = document.createElement("div");
+      divider.className = "section-divider";
+      divider.innerHTML = `${title}<span class="count">${photos.length}</span>`;
+      elements.push(divider);
+      photos.forEach((p) => elements.push(renderPickerTile(p, curImg)));
+      return elements;
+    };
+
+    const refreshPicker = () => {
+      if (!currentSlot) return;
+      modalBody.innerHTML = "";
+      const imgsObj = (loadOv().images || {});
+      const curImg = (imgsObj && imgsObj[currentSlot]) || deepGet(DEFAULTS, "images." + currentSlot);
+      const allPhotos = getAllPhotos();
+
+      // Apply filter
+      let filtered = allPhotos;
+      if (currentFilter !== "all") {
+        filtered = allPhotos.filter(p => p.type === currentFilter.replace(/s$/, ""));
+      }
+      // Apply search
+      if (currentSearch) {
+        const q = currentSearch.toLowerCase();
+        filtered = filtered.filter(p => p.label.toLowerCase().includes(q) || p.key.toLowerCase().includes(q));
+      }
+
+      pickerCount.textContent = `${filtered.length} of ${allPhotos.length} photos`;
+
+      if (currentFilter === "all" && !currentSearch) {
+        // Show with section dividers
+        const groups = {
+          upload: filtered.filter(p => p.type === "upload"),
+          curated: filtered.filter(p => p.type === "curated"),
+          pool: filtered.filter(p => p.type === "pool")
+        };
+        renderPickerSection("⬆ YOUR UPLOADS", groups.upload, curImg).forEach(el => modalBody.appendChild(el));
+        renderPickerSection("⭐ CURATED", groups.curated, curImg).forEach(el => modalBody.appendChild(el));
+        renderPickerSection("📂 ALL PHOTOS", groups.pool, curImg).forEach(el => modalBody.appendChild(el));
+      } else {
+        // Flat list
+        filtered.forEach(p => modalBody.appendChild(renderPickerTile(p, curImg)));
+        if (filtered.length === 0) {
+          const empty = document.createElement("div");
+          empty.style.cssText = "grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-dim); font-size: 13px;";
+          empty.textContent = "No photos match your search/filter.";
+          modalBody.appendChild(empty);
+        }
+      }
+    };
+
+    const openPicker = (slot, onPick) => {
+      pickerCb = onPick;
+      currentSlot = slot;
+      refreshPicker();
+      modal.classList.add("show");
+    };
+
+    // Search input
+    searchInput.addEventListener("input", (e) => {
+      currentSearch = e.target.value.trim();
+      refreshPicker();
+    });
+
+    // Filter chips
+    document.querySelectorAll(".filter-chip").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        document.querySelectorAll(".filter-chip").forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
+        currentFilter = chip.dataset.filter;
+        refreshPicker();
+      });
+    });
+
+    const closeModal = () => modal.classList.remove("show");
+    document.getElementById("modal-close").addEventListener("click", closeModal);
+    modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
+
+    // ====== Build options for image select dropdown ======
+    function rebuildSelectOptions(selectEl, currentValue) {
+      selectEl.innerHTML = "";
+      const photos = getAllPhotos();
+      const uploads = photos.filter(p => p.type === "upload");
+      const curated = photos.filter(p => p.type === "curated");
+      const pool = photos.filter(p => p.type === "pool");
+
+      const addGroup = (label, items, prefix) => {
+        if (items.length === 0) return;
+        const g = document.createElement("optgroup");
+        g.label = label;
+        items.forEach((p) => {
+          const o = document.createElement("option");
+          o.value = p.key;
+          o.textContent = (prefix || "") + (p.label || p.key);
+          if (p.key === currentValue) o.selected = true;
+          g.appendChild(o);
+        });
+        selectEl.appendChild(g);
+      };
+
+      addGroup("⬆ Your uploads", uploads, "📤 ");
+      addGroup("⭐ Curated", curated, "");
+      addGroup("📂 All photos", pool, "");
+    }
+
+    // ====== Upload handler ======
+    const uploadInput = document.getElementById("upload-input");
+    uploadInput.addEventListener("change", async (e) => {
+      const files = Array.from(e.target.files || []);
+      if (files.length === 0) return;
+      const ups = loadUploads();
+      let ok = 0, failed = 0;
+      for (const file of files) {
+        try {
+          // Compress: read into canvas, scale max 1600px, output JPEG 0.85
+          const dataUri = await compressImage(file);
+          const safeName = file.name.replace(/[^a-z0-9.]/gi, "_").substring(0, 30);
+          const key = `upload_${Date.now()}_${Math.random().toString(36).slice(2, 6)}_${safeName}`;
+          ups[key] = dataUri;
+          ok++;
+          // Try save incrementally — catch quota errors early
+          if (!saveUploads(ups)) {
+            delete ups[key];
+            failed++;
+            ok--;
+            toast("Storage full! Delete some uploads first.", "error");
+            break;
+          }
+        } catch (err) {
+          failed++;
+        }
+      }
+      uploadInput.value = "";
+      if (ok > 0) {
+        toast(`${ok} photo(s) uploaded${failed ? `, ${failed} failed` : ""}`, "success");
+        // Refresh picker if open
+        if (modal.classList.contains("show") && currentSlot) {
+          openPicker(currentSlot, pickerCb);
+        }
+        // Re-render all image cards to reflect new options in selects
+        rerenderAllImageCards();
+      } else if (failed > 0) {
+        toast("Upload failed — try a smaller image", "error");
+      }
+    });
+
+    // Compress an image File to a data URI (max dimension 1600px, JPEG quality 0.85)
+    function compressImage(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onerror = reject;
+        reader.onload = (ev) => {
+          const img = new Image();
+          img.onerror = reject;
+          img.onload = () => {
+            const MAX = 1600;
+            let w = img.width, h = img.height;
+            if (w > MAX || h > MAX) {
+              if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+              else { w = Math.round(w * MAX / h); h = MAX; }
+            }
+            const canvas = document.createElement("canvas");
+            canvas.width = w; canvas.height = h;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, w, h);
+            try {
+              resolve(canvas.toDataURL("image/jpeg", 0.85));
+            } catch (e) { reject(e); }
+          };
+          img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // (clear-uploads button removed — users can delete individual uploads via × on each tile)
+
+    function rerenderAllImageCards() {
+      // Refresh select options on all currently rendered image cards
+      document.querySelectorAll(".img-card").forEach((card) => {
+        const sel = card.querySelector("select");
+        if (sel) {
+          const cur = sel.value;
+          rebuildSelectOptions(sel, cur);
+        }
+      });
+    }
+
+    // ====== Render tabs + sections ======
+    const tabsEl = document.getElementById("tabs");
+    const mainEl = document.getElementById("main");
+
+    PAGES.forEach((p, i) => {
+      const tab = document.createElement("button");
+      tab.className = "tab" + (i === 0 ? " active" : "");
+      tab.dataset.tab = p.id;
+      tab.textContent = p.label;
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"));
+        tab.classList.add("active");
+        document.querySelectorAll(".page-section").forEach((s) => s.classList.remove("active"));
+        document.getElementById("sec-" + p.id).classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+      tabsEl.appendChild(tab);
+
+      const sec = document.createElement("div");
+      sec.id = "sec-" + p.id;
+      sec.className = "page-section" + (i === 0 ? " active" : "");
+
+      // Images section
+      const imgs = IMAGE_SCHEMA[p.id] || [];
+      if (imgs.length > 0) {
+        const card = document.createElement("div");
+        card.className = "section";
+        const h2 = document.createElement("h2");
+        h2.innerHTML = `Photos <span class="count">${imgs.length}</span>`;
+        card.appendChild(h2);
+        const body = document.createElement("div"); body.className = "body";
+        const grid = document.createElement("div"); grid.className = "img-grid";
+        imgs.forEach((s) => grid.appendChild(renderImageCard(s)));
+        body.appendChild(grid);
+        card.appendChild(body);
+        sec.appendChild(card);
+      }
+
+      // Text section
+      const texts = TEXT_SCHEMA[p.id] || [];
+      if (texts.length > 0) {
+        const card = document.createElement("div");
+        card.className = "section";
+        const h2 = document.createElement("h2");
+        h2.innerHTML = `Text <span class="count">${texts.length}</span>`;
+        card.appendChild(h2);
+        const body = document.createElement("div"); body.className = "body";
+        texts.forEach((t) => body.appendChild(renderTextField(t)));
+        card.appendChild(body);
+        sec.appendChild(card);
+      }
+
+      if (p.id === "identity") {
+        const info = document.createElement("div");
+        info.className = "info-box";
+        info.innerHTML = `
+          <strong>How this works:</strong>
+          <ul>
+            <li>Edit anything → auto-saves to your browser (localStorage).</li>
+            <li>Click ↗ Open Site to preview your changes live.</li>
+            <li>Hit <strong>↓ Download data.js</strong> to save changes permanently (replace the file in this folder).</li>
+            <li>For images that crop wrong, use the position presets (↑ • ↕ ↓) to focus on top, center, or bottom of the photo.</li>
+          </ul>
+        `;
+        sec.insertBefore(info, sec.firstChild);
+      }
+
+      mainEl.appendChild(sec);
+    });
+
+    // ====== Buttons ======
+    document.getElementById("btn-reset").addEventListener("click", () => {
+      if (!confirm("Reset all changes? This will restore the original site.")) return;
+      clearOv();
+      OV = {};
+      toast("Reset done. Reloading…", "success");
+      setTimeout(() => location.reload(), 700);
+    });
+
+    // ====== Export data.js with current OV merged ======
+    const mergeDeep = (a, b) => {
+      if (b == null) return a;
+      if (typeof a !== "object" || typeof b !== "object" || Array.isArray(a) || Array.isArray(b)) return b;
+      const out = { ...a };
+      for (const k in b) out[k] = mergeDeep(a[k], b[k]);
+      return out;
+    };
+
+    const generateDataJs = () => {
+      const merged = mergeDeep(DEFAULTS, OV);
+      // Embed any uploaded photo data URIs directly into available_images +
+      // a separate "uploaded_inline" map, so exported data.js is self-contained.
+      const uploads = loadUploads();
+      const uploadKeys = Object.keys(uploads);
+      if (uploadKeys.length > 0) {
+        merged.available_images = (merged.available_images || []).concat(uploadKeys);
+        merged.uploaded_inline = uploads;
+      }
+      const json = JSON.stringify(merged, null, 2);
+      return `// ====================================================
+// data.js — Master content file for the birthday site
+// Generated from admin · ${new Date().toLocaleString()}
+// ====================================================
+
+window.SITE_DATA = ${json};
+
+window.SITE_DEFAULTS = JSON.parse(JSON.stringify(window.SITE_DATA));
+
+// Restore any inline uploads to localStorage (so they're usable across the site)
+if (window.SITE_DATA.uploaded_inline) {
+  try {
+    var existing = JSON.parse(localStorage.getItem("birthdaySite_uploads_v1") || "{}");
+    var merged_ups = Object.assign({}, existing, window.SITE_DATA.uploaded_inline);
+    localStorage.setItem("birthdaySite_uploads_v1", JSON.stringify(merged_ups));
+  } catch (e) {}
+}
+`;
+    };
+
+    document.getElementById("btn-export").addEventListener("click", () => {
+      const ups = loadUploads();
+      const upCount = Object.keys(ups).length;
+      const content = generateDataJs();
+      const sizeKB = Math.round(content.length / 1024);
+      const blob = new Blob([content], { type: "text/javascript" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = "data.js";
+      document.body.appendChild(a); a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      const msg = upCount > 0
+        ? `data.js (${sizeKB} KB) downloaded with ${upCount} embedded uploads`
+        : `data.js (${sizeKB} KB) downloaded`;
+      toast(msg, "success");
+    });
+
+    setStatus("saved", "Saved");
+  })();
+  </script>
+</body>
+</html>

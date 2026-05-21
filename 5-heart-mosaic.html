@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You Have My Whole Heart — For Sheetal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,500&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-1: #fde7ec; --bg-2: #fbd1da; --bg-3: #f8a5b9;
+    --rose: #d96a85; --rose-deep: #b13e5e; --rose-darker: #7a2545;
+    --paper: #ffffff; --gold: #d4a574;
+    --ink: #4a1b30;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { overflow-x: hidden; }
+  body {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 50% 0%, var(--bg-1), var(--bg-2) 60%, var(--bg-3));
+    background-attachment: fixed;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--ink);
+  }
+  .wrapper {
+    max-width: 480px; margin: 0 auto;
+    padding: 36px 14px 60px; position: relative;
+  }
+  .eyebrow {
+    text-align: center; font-family: 'Cinzel', serif;
+    font-size: 10px; letter-spacing: 8px;
+    color: var(--rose-deep); margin-bottom: 16px; font-weight: 500;
+  }
+  .title {
+    text-align: center; font-family: 'Great Vibes', cursive;
+    font-size: 54px; line-height: 1.05; color: var(--rose-darker);
+    margin-bottom: 32px; font-weight: 400; letter-spacing: 0.5px;
+  }
+  .heart-grid {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    gap: 5px; margin: 0 auto 38px; width: 100%;
+  }
+  .cell {
+    aspect-ratio: 1; border-radius: 50%;
+    overflow: hidden; background: rgba(255,255,255,0.4);
+  }
+  .cell.empty { background: transparent; }
+  .cell.photo {
+    box-shadow: 0 3px 8px rgba(177, 62, 94, 0.2);
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
+  }
+  .cell.photo img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block; object-position: center 25%;
+    filter: saturate(1.05);
+  }
+  .cell.heart {
+    background: linear-gradient(135deg, var(--rose-deep), var(--rose-darker));
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 22px;
+    box-shadow:
+      0 4px 12px rgba(177, 62, 94, 0.5),
+      inset 0 1px 2px rgba(255,255,255,0.3);
+    border: 1.5px solid var(--paper);
+  }
+  .verse {
+    text-align: center; font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 19px; line-height: 1.55;
+    color: var(--rose-darker); padding: 0 16px;
+    margin-bottom: 36px; font-weight: 400;
+  }
+  .verse .em { color: var(--rose-deep); font-weight: 500; }
+  .premium {
+    background: var(--paper); padding: 16px 16px 26px;
+    margin: 0 6px 32px;
+    box-shadow:
+      0 2px 4px rgba(177, 62, 94, 0.08),
+      0 16px 36px rgba(177, 62, 94, 0.18);
+    position: relative;
+    border: 1px solid rgba(177, 62, 94, 0.18);
+  }
+  .premium::before, .premium::after {
+    content: ''; position: absolute;
+    width: 24px; height: 24px;
+    border: 1px solid var(--gold);
+  }
+  .premium::before { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+  .premium::after { bottom: 8px; right: 8px; border-left: none; border-top: none; }
+  .premium .pic {
+    position: relative; margin-bottom: 18px; padding: 6px;
+    border: 1px solid rgba(177, 62, 94, 0.22);
+  }
+  .premium .pic img {
+    width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+    display: block; object-position: center 20%;
+  }
+  .premium .cap {
+    text-align: center; font-family: 'Great Vibes', cursive;
+    font-size: 32px; color: var(--rose-darker); line-height: 1;
+  }
+  .premium .cap-sub {
+    text-align: center; font-family: 'Cinzel', serif;
+    font-size: 9px; letter-spacing: 5px;
+    color: var(--rose-deep); margin-top: 8px;
+  }
+  .arch-strip {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px; margin-bottom: 36px;
+  }
+  .arch {
+    background: var(--paper); padding: 5px;
+    border-top-left-radius: 100% 60%;
+    border-top-right-radius: 100% 60%;
+    box-shadow: 0 10px 22px rgba(177, 62, 94, 0.18);
+  }
+  .arch img {
+    width: 100%; aspect-ratio: 3 / 5; object-fit: cover;
+    display: block; object-position: center 22%;
+    border-top-left-radius: 100% 60%;
+    border-top-right-radius: 100% 60%;
+  }
+  .glass {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 18px; padding: 30px 24px;
+    text-align: center;
+    box-shadow: 0 18px 40px rgba(177, 62, 94, 0.18);
+    margin: 0 4px;
+  }
+  .glass .icon { font-size: 26px; color: var(--rose-deep); margin-bottom: 10px; }
+  .glass h3 {
+    font-family: 'Great Vibes', cursive; font-size: 38px;
+    color: var(--rose-darker); line-height: 1;
+    margin-bottom: 16px; font-weight: 400;
+  }
+  .glass p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px; line-height: 1.55;
+    color: var(--ink); font-style: italic; font-weight: 400;
+  }
+  .glass .divider {
+    margin: 14px auto; width: 40px; height: 1px;
+    background: var(--rose-deep); opacity: 0.4;
+  }
+  .glass .sign {
+    font-family: 'Cinzel', serif; font-size: 9px;
+    letter-spacing: 5px; color: var(--rose-deep); margin-top: 16px;
+  }
+  .nav-row {
+    display: flex; justify-content: space-between;
+    margin-top: 40px; padding: 0 8px;
+  }
+  .nav-row a {
+    font-family: 'Cinzel', serif; font-size: 10px;
+    letter-spacing: 5px; color: var(--rose-deep);
+    text-decoration: none; padding: 10px;
+  }
+</style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="eyebrow" data-t="page5.eyebrow">· A LOVE NOTE · FOR SHEETAL ·</div>
+    <h1 class="title" data-t="page5.title">You have my whole heart</h1>
+
+    <div class="heart-grid">
+      <!-- Row 1: . X X . X X . -->
+      <div class="cell empty"></div>
+      <div class="cell photo"><img src="images/01_bouquet_solo.jpg" alt="" data-img="p5_r1c2"></div>
+      <div class="cell photo"><img src="images/02_bouquet_couple.jpg" alt="" data-img="p5_r1c3"></div>
+      <div class="cell empty"></div>
+      <div class="cell photo"><img src="images/03_lime_green_smile.jpg" alt="" data-img="p5_r1c5"></div>
+      <div class="cell photo"><img src="images/04_laughing_close.jpg" alt="" data-img="p5_r1c6"></div>
+      <div class="cell empty"></div>
+
+      <!-- Row 2: X X X X X X X -->
+      <div class="cell photo"><img src="images/05_mcd_icecream.jpg" alt="" data-img="p5_r2c1"></div>
+      <div class="cell photo"><img src="images/07_floral_ceiling.jpg" alt="" data-img="p5_r2c2"></div>
+      <div class="cell photo"><img src="images/08_dessert_date.jpg" alt="" data-img="p5_r2c3"></div>
+      <div class="cell photo"><img src="images/09_peace_signs.jpg" alt="" data-img="p5_r2c4"></div>
+      <div class="cell photo"><img src="images/11_outdoor_jackets.jpg" alt="" data-img="p5_r2c5"></div>
+      <div class="cell photo"><img src="images/12_store_stripes.jpg" alt="" data-img="p5_r2c6"></div>
+      <div class="cell photo"><img src="images/13_saree_pink.jpg" alt="" data-img="p5_r2c7"></div>
+
+      <!-- Row 3: X X X H X X X -->
+      <div class="cell photo"><img src="images/14_christmas_glam.jpg" alt="" data-img="p5_r3c1"></div>
+      <div class="cell photo"><img src="images/15_highway_walk.jpg" alt="" data-img="p5_r3c2"></div>
+      <div class="cell photo"><img src="images/16_red_stripes_close.jpg" alt="" data-img="p5_r3c3"></div>
+      <div class="cell heart">♥</div>
+      <div class="cell photo"><img src="images/17_diwali_display.jpg" alt="" data-img="p5_r3c5"></div>
+      <div class="cell photo"><img src="images/18_cinema_solo.jpg" alt="" data-img="p5_r3c6"></div>
+      <div class="cell photo"><img src="images/20_hexagonal_wall.jpg" alt="" data-img="p5_r3c7"></div>
+
+      <!-- Row 4: . X X X X X . -->
+      <div class="cell empty"></div>
+      <div class="cell photo"><img src="images/21_office_red.jpg" alt="" data-img="p5_r4c2"></div>
+      <div class="cell photo"><img src="images/22_adidas_couple.jpg" alt="" data-img="p5_r4c3"></div>
+      <div class="cell photo"><img src="images/23_shinchan_cuddle.jpg" alt="" data-img="p5_r4c4"></div>
+      <div class="cell photo"><img src="images/25_shoe_store.jpg" alt="" data-img="p5_r4c5"></div>
+      <div class="cell photo"><img src="images/26_fitting_room.jpg" alt="" data-img="p5_r4c6"></div>
+      <div class="cell empty"></div>
+
+      <!-- Row 5: . . X X X . . -->
+      <div class="cell empty"></div>
+      <div class="cell empty"></div>
+      <div class="cell photo"><img src="images/32_pout_couple.jpg" alt="" data-img="p5_r5c3"></div>
+      <div class="cell photo"><img src="images/33_candy_smile.jpg" alt="" data-img="p5_r5c4"></div>
+      <div class="cell photo"><img src="images/34_kiss_pout.jpg" alt="" data-img="p5_r5c5"></div>
+      <div class="cell empty"></div>
+      <div class="cell empty"></div>
+
+      <!-- Row 6: . . . X . . . -->
+      <div class="cell empty"></div>
+      <div class="cell empty"></div>
+      <div class="cell empty"></div>
+      <div class="cell photo"><img src="images/35_neon_store.jpg" alt="" data-img="p5_r6c4"></div>
+      <div class="cell empty"></div>
+      <div class="cell empty"></div>
+      <div class="cell empty"></div>
+    </div>
+
+    <div class="verse" data-t="page5.verse_html">
+      Har dhadkan, har saans, har <span class="em">khwaab</span> —
+      <br>sab tumhare naam, Sheetal.
+    </div>
+
+    <div class="premium">
+      <div class="pic">
+        <img src="images/06_peach_kurta_couple.jpg" alt="" data-img="p5_premium">
+      </div>
+      <div class="cap" data-t="page5.premium_cap">forever &amp; ever</div>
+      <div class="cap-sub" data-t="page5.premium_sub">— YOURS, ALWAYS · PRINCE —</div>
+    </div>
+
+    <div class="arch-strip">
+      <div class="arch"><img src="images/10_summer_polo.jpg" alt="" data-img="p5_arch1"></div>
+      <div class="arch"><img src="images/19_cinema_couple.jpg" alt="" data-img="p5_arch2"></div>
+      <div class="arch"><img src="images/27_cinema_couple_2.jpg" alt="" data-img="p5_arch3"></div>
+    </div>
+
+    <div class="glass">
+      <div class="icon">♥</div>
+      <h3 data-t="page5.glass_h">To you, my Sheetal</h3>
+      <p data-t="page5.glass_p">
+        Tum mere dil ka woh kona ho jahan sirf
+        roshni rehti hai — hamesha.
+      </p>
+      <div class="divider"></div>
+      <p style="font-family:'Great Vibes',cursive; font-size:30px; color:var(--rose-darker); font-style:normal; line-height:1;" data-t="page5.glass_big">
+        happy birthday
+      </p>
+      <div class="sign" data-t="page5.glass_sig">— WITH ALL MY HEART · PRINCE —</div>
+    </div>
+
+    <div class="nav-row">
+      <a href="4-magazine.html">← BACK</a>
+      <a href="6-timeline.html">NEXT →</a>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script src="gallery.js"></script>
+</body>
+</html>

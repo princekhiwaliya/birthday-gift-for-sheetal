@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Birthday Gift — For Sheetal, With Love</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-1: #fff5f7; --bg-2: #fde2e8; --bg-3: #f9c8d4;
+    --rose: #c2185b; --rose-deep: #8e1538; --rose-darker: #5d1933;
+    --paper: #ffffff;
+    --ink: #1c1410; --ink-soft: #4a3a30; --muted: #8a7a72;
+    --line: rgba(194, 24, 91, 0.18);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { overflow-x: hidden; }
+  body {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 20% 5%, rgba(248, 165, 185, 0.4), transparent 50%),
+      radial-gradient(circle at 80% 95%, rgba(255, 200, 215, 0.5), transparent 50%),
+      linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 60%, var(--bg-3) 100%);
+    background-attachment: fixed;
+    font-family: 'Inter Tight', sans-serif;
+    color: var(--ink);
+    padding: 36px 16px 50px; line-height: 1.5;
+  }
+  .wrapper { max-width: 480px; margin: 0 auto; position: relative; }
+  /* Admin link removed — access via /admin URL only */
+  .header {
+    text-align: center; margin-bottom: 36px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--line);
+    animation: fadeIn 1s ease-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .header .small {
+    font-size: 10px; letter-spacing: 6px;
+    text-transform: uppercase; color: var(--rose);
+    margin-bottom: 18px; font-weight: 500;
+  }
+  .header h1 {
+    font-family: 'Fraunces', serif; font-size: 46px;
+    line-height: 0.95; color: var(--rose-darker);
+    font-weight: 400; letter-spacing: -1.5px; margin-bottom: 14px;
+  }
+  .header h1 em { font-style: italic; color: var(--rose); font-weight: 300; }
+  .header p {
+    font-family: 'Fraunces', serif; font-style: italic;
+    color: var(--ink-soft); font-size: 16px; font-weight: 300;
+    max-width: 360px; margin: 0 auto; line-height: 1.5;
+  }
+  .header .date {
+    margin-top: 16px; font-family: 'Inter Tight', sans-serif;
+    font-size: 9px; letter-spacing: 5px;
+    color: var(--rose); text-transform: uppercase;
+  }
+  .intro-note {
+    text-align: center; margin-bottom: 32px; padding: 0 12px;
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 16px; color: var(--rose-darker);
+    line-height: 1.55; opacity: 0.85;
+  }
+  .ornament {
+    text-align: center; color: var(--rose);
+    margin-bottom: 28px; font-size: 12px; letter-spacing: 10px;
+  }
+  .cards { display: flex; flex-direction: column; gap: 14px; }
+  .card {
+    display: flex; align-items: center; gap: 16px;
+    background: var(--paper); padding: 22px 20px;
+    text-decoration: none; color: inherit;
+    border: 1px solid var(--line);
+    box-shadow: 0 6px 18px rgba(194, 24, 91, 0.08);
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    position: relative; overflow: hidden;
+    animation: cardIn .5s ease-out both;
+  }
+  .card:nth-child(1) { animation-delay: 0.05s; }
+  .card:nth-child(2) { animation-delay: 0.10s; }
+  .card:nth-child(3) { animation-delay: 0.15s; }
+  .card:nth-child(4) { animation-delay: 0.20s; }
+  .card:nth-child(5) { animation-delay: 0.25s; }
+  .card:nth-child(6) { animation-delay: 0.30s; }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(194, 24, 91, 0.18);
+    border-color: var(--rose);
+  }
+  .card:active { transform: translateY(0); }
+  .card .num {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 34px; line-height: 1;
+    color: var(--rose); font-weight: 400;
+    flex-shrink: 0; width: 44px;
+  }
+  .card .body { flex: 1; min-width: 0; }
+  .card .title {
+    font-family: 'Fraunces', serif; font-size: 19px;
+    color: var(--ink); line-height: 1.1; font-weight: 500;
+    margin-bottom: 4px; letter-spacing: -0.3px;
+  }
+  .card .title em { font-style: italic; color: var(--rose-deep); font-weight: 400; }
+  .card .desc {
+    font-family: 'Inter Tight', sans-serif; font-size: 12px;
+    color: var(--muted); line-height: 1.4; font-weight: 400;
+  }
+  .card .arrow {
+    font-size: 20px; color: var(--rose); margin-left: 6px;
+    flex-shrink: 0; transition: transform .25s ease;
+  }
+  .card:hover .arrow { transform: translateX(4px); }
+  .card .accent-bar {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: linear-gradient(180deg, var(--rose), var(--rose-deep));
+    transform: scaleY(0); transform-origin: top;
+    transition: transform .3s ease;
+  }
+  .card:hover .accent-bar { transform: scaleY(1); }
+  .footer {
+    text-align: center; margin-top: 50px;
+    padding-top: 32px; border-top: 1px solid var(--line);
+  }
+  .footer .heart { color: var(--rose); font-size: 16px; margin-bottom: 10px; }
+  .footer p {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 15px; color: var(--rose-darker);
+    line-height: 1.5; margin-bottom: 14px;
+  }
+  .footer .sig {
+    font-family: 'Inter Tight', sans-serif; font-size: 9px;
+    letter-spacing: 5px; color: var(--rose); text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="header">
+      <div class="small" data-t="index.eyebrow">— A BIRTHDAY GIFT —</div>
+      <h1 data-t="index.title_html">For <em>Sheetal</em>,<br>with love.</h1>
+      <p data-t="index.sub_html">
+        Six little pages.<br>
+        One whole heart.
+      </p>
+      <div class="date" data-t="meta.date_display">22 · 05 · 2026</div>
+    </div>
+
+    <div class="intro-note" data-t="index.intro_html">
+      "Yeh tumhare liye hai, meri jaan —<br>
+      khol ke padhna, ek ek page."
+    </div>
+
+    <div class="ornament">· ✦ ·</div>
+
+    <div class="cards">
+      <a href="1-happy-birthday.html" class="card">
+        <span class="accent-bar"></span>
+        <div class="num">01</div>
+        <div class="body">
+          <div class="title" data-t="index.card1_title_html">Happy <em>Birthday</em></div>
+          <div class="desc" data-t="index.card1_desc">a soft note · a quiet love · a card just for you.</div>
+        </div>
+        <div class="arrow">→</div>
+      </a>
+
+      <a href="2-memories.html" class="card">
+        <span class="accent-bar"></span>
+        <div class="num">02</div>
+        <div class="body">
+          <div class="title" data-t="index.card2_title_html">Our little <em>memories</em></div>
+          <div class="desc" data-t="index.card2_desc">a scrapbook of polaroids · scribbles · our silly best.</div>
+        </div>
+        <div class="arrow">→</div>
+      </a>
+
+      <a href="3-queen.html" class="card">
+        <span class="accent-bar"></span>
+        <div class="num">03</div>
+        <div class="body">
+          <div class="title" data-t="index.card3_title_html">My Birthday <em>Queen</em></div>
+          <div class="desc" data-t="index.card3_desc">black, gold & you · the royal edition.</div>
+        </div>
+        <div class="arrow">→</div>
+      </a>
+
+      <a href="4-magazine.html" class="card">
+        <span class="accent-bar"></span>
+        <div class="num">04</div>
+        <div class="body">
+          <div class="title" data-t="index.card4_title_html">U<em>s</em>, the magazine</div>
+          <div class="desc" data-t="index.card4_desc">vol. 01 · birthday issue · cover star: Sheetal.</div>
+        </div>
+        <div class="arrow">→</div>
+      </a>
+
+      <a href="5-heart-mosaic.html" class="card">
+        <span class="accent-bar"></span>
+        <div class="num">05</div>
+        <div class="body">
+          <div class="title" data-t="index.card5_title_html">My whole <em>heart</em></div>
+          <div class="desc" data-t="index.card5_desc">photos arranged in the shape of how I feel.</div>
+        </div>
+        <div class="arrow">→</div>
+      </a>
+
+      <a href="6-timeline.html" class="card">
+        <span class="accent-bar"></span>
+        <div class="num">06</div>
+        <div class="body">
+          <div class="title" data-t="index.card6_title_html">A love letter, in <em>chapters</em></div>
+          <div class="desc" data-t="index.card6_desc">five small stories about why it's still you.</div>
+        </div>
+        <div class="arrow">→</div>
+      </a>
+    </div>
+
+    <div class="footer">
+      <div class="heart">♥</div>
+      <p data-t="index.footer_quote_html">
+        "Tum sirf ek din ki nahi —<br>
+        meri har subah ki wajah ho."
+      </p>
+      <div class="sig" data-t="index.footer_sig">— MADE WITH LOVE · BY PRINCE —</div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

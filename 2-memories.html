@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memories — A Scrapbook for Sheetal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream-1: #f5e6d3; --cream-2: #ecd5b6; --tan: #e6c9a1;
+    --ink: #3a2918; --ink-soft: #6b4f33;
+    --paper: #fffaf2; --tape: rgba(255, 245, 200, 0.78);
+    --red: #b8463a; --pen: #2a1d10;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { overflow-x: hidden; }
+  body {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 10% 5%, rgba(184, 70, 58, 0.06), transparent 40%),
+      radial-gradient(circle at 90% 95%, rgba(107, 79, 51, 0.1), transparent 40%),
+      linear-gradient(170deg, var(--cream-1) 0%, var(--cream-2) 50%, var(--tan) 100%);
+    background-attachment: fixed;
+    font-family: 'Kalam', cursive;
+    color: var(--ink); padding: 0; position: relative;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(58, 41, 24, 0.04) 1px, transparent 2px),
+      radial-gradient(circle at 70% 70%, rgba(58, 41, 24, 0.03) 1px, transparent 2px),
+      radial-gradient(circle at 40% 80%, rgba(58, 41, 24, 0.04) 1px, transparent 2px);
+    background-size: 60px 60px, 80px 80px, 100px 100px;
+    pointer-events: none; z-index: 0; opacity: 0.7;
+  }
+  .wrapper {
+    max-width: 480px; margin: 0 auto;
+    padding: 36px 14px 60px;
+    position: relative; z-index: 1;
+  }
+  .stamp {
+    position: absolute; top: 18px; right: 14px;
+    transform: rotate(15deg);
+    border: 2px solid var(--red); color: var(--red);
+    padding: 6px 12px; font-family: 'Kalam', cursive;
+    font-weight: 700; font-size: 11px; letter-spacing: 2px;
+    opacity: 0.78; border-radius: 4px;
+    background: rgba(255, 250, 240, 0.4); z-index: 10;
+  }
+  .header { text-align: center; margin-bottom: 30px; padding-top: 8px; }
+  .header .small {
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 18px; color: var(--ink-soft); margin-bottom: 4px;
+  }
+  .header h1 {
+    font-family: 'Caveat', cursive; font-size: 58px;
+    line-height: 1; color: var(--ink);
+    font-weight: 700; letter-spacing: -1px;
+  }
+  .header h1 .amp { color: var(--red); font-style: italic; font-size: 0.85em; }
+  .header .sub {
+    font-family: 'Kalam', cursive; font-size: 16px;
+    color: var(--ink-soft); margin-top: 6px; font-weight: 300;
+  }
+  .doodle {
+    text-align: center; color: var(--red);
+    margin: 12px 0; font-family: 'Shadows Into Light', cursive;
+    font-size: 22px;
+  }
+  .pol {
+    background: var(--paper);
+    padding: 10px 10px 36px;
+    box-shadow:
+      0 2px 4px rgba(0,0,0,0.06),
+      0 10px 20px rgba(58, 41, 24, 0.18),
+      0 25px 40px rgba(58, 41, 24, 0.1);
+    position: relative;
+    transition: transform .3s ease;
+  }
+  .pol::before {
+    content: ''; position: absolute;
+    top: -8px; left: 50%;
+    transform: translateX(-50%) rotate(-2deg);
+    width: 52px; height: 16px; background: var(--tape);
+    border: 1px solid rgba(180, 140, 70, 0.15);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+  }
+  .pol img {
+    width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+    display: block; object-position: center 22%;
+    filter: saturate(0.88) contrast(1.02);
+  }
+  .pol .cap {
+    position: absolute; bottom: 7px; left: 0; right: 0;
+    text-align: center; font-family: 'Caveat', cursive;
+    font-size: 22px; color: var(--pen);
+    font-weight: 600; line-height: 1;
+  }
+  .row {
+    display: flex; gap: 6px;
+    justify-content: center; margin-bottom: 30px;
+  }
+  .row .pol { width: 48%; }
+  .row .pol:nth-child(1) { transform: rotate(-4deg); margin-top: 14px; }
+  .row .pol:nth-child(2) { transform: rotate(3deg); }
+  .row.alt .pol:nth-child(1) { transform: rotate(2deg); }
+  .row.alt .pol:nth-child(2) { transform: rotate(-5deg); margin-top: 18px; }
+  .row.alt .pol::before { transform: translateX(-50%) rotate(3deg); }
+
+  .feature {
+    width: 78%; margin: 0 auto 30px;
+    transform: rotate(-2deg);
+  }
+  .feature .pol { padding-bottom: 44px; }
+  .feature .pol img { aspect-ratio: 4 / 5; }
+  .feature .pol .cap { font-size: 26px; bottom: 10px; }
+
+  .single-tilt {
+    width: 70%; margin: 0 auto 30px;
+    transform: rotate(4deg);
+  }
+  .single-tilt .pol::before {
+    transform: translateX(-50%) rotate(-5deg);
+    background: rgba(255, 200, 200, 0.65);
+  }
+
+  .scribble {
+    text-align: center; font-family: 'Shadows Into Light', cursive;
+    color: var(--ink-soft); font-size: 19px; line-height: 1.5;
+    margin: 24px 14px; transform: rotate(-1deg);
+  }
+  .scribble .heart-inline {
+    color: var(--red); display: inline-block; transform: scale(1.2);
+  }
+  .ticket {
+    background: var(--paper); margin: 30px auto;
+    width: 84%; padding: 18px 22px;
+    transform: rotate(-1.5deg);
+    border-top: 2px dashed rgba(58, 41, 24, 0.25);
+    border-bottom: 2px dashed rgba(58, 41, 24, 0.25);
+    box-shadow: 0 8px 18px rgba(58, 41, 24, 0.15);
+    text-align: center;
+  }
+  .ticket .t-small {
+    font-family: 'Kalam', cursive; font-size: 10px;
+    letter-spacing: 4px; color: var(--red);
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .ticket .t-big {
+    font-family: 'Caveat', cursive; font-size: 30px;
+    color: var(--ink); line-height: 1; font-weight: 700;
+  }
+  .ticket .t-meta {
+    font-family: 'Kalam', cursive; font-size: 13px;
+    color: var(--ink-soft); margin-top: 6px;
+  }
+  .closing {
+    text-align: center; margin-top: 30px;
+    transform: rotate(-2deg);
+  }
+  .closing .heart-big {
+    font-size: 40px; color: var(--red); line-height: 1;
+  }
+  .closing .sig {
+    font-family: 'Caveat', cursive; font-size: 32px;
+    color: var(--ink); font-weight: 600; margin-top: 8px;
+  }
+  .nav-row {
+    display: flex; justify-content: space-between;
+    margin-top: 50px; padding: 0 8px;
+  }
+  .nav-row a {
+    font-family: 'Kalam', cursive; font-size: 13px;
+    letter-spacing: 2px; color: var(--ink-soft);
+    text-decoration: none; padding: 10px;
+  }
+</style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="stamp" data-t="page2.stamp">BIRTHDAY SPECIAL ★</div>
+
+    <div class="header">
+      <div class="small" data-t="page2.header_small">our little</div>
+      <h1 data-t="page2.header_title_html">memories <span class="amp">&amp;</span> moments</h1>
+      <div class="sub" data-t="page2.header_sub">a tiny scrapbook · for Sheetal</div>
+    </div>
+
+    <div class="doodle">~ ♥ ~ ♥ ~ ♥ ~</div>
+
+    <div class="row">
+      <div class="pol"><img src="images/05_mcd_icecream.jpg" alt="" data-img="p2_a1"><div class="cap" data-t="page2.cap1">that sunny day</div></div>
+      <div class="pol"><img src="images/06_peach_kurta_couple.jpg" alt="" data-img="p2_a2"><div class="cap" data-t="page2.cap2">silly us</div></div>
+    </div>
+
+    <div class="scribble" data-t="page2.scribble1_html">
+      tum hasti ho — <span class="heart-inline">♥</span> — toh duniya hasti hai
+    </div>
+
+    <div class="feature">
+      <div class="pol"><img src="images/07_floral_ceiling.jpg" alt="" data-img="p2_feature"><div class="cap" data-t="page2.cap_feature">my favourite</div></div>
+    </div>
+
+    <div class="scribble" data-t="page2.scribble2_html">
+      ↓ yeh wala photo dekh ke <br>main har baar muskura deta hoon
+    </div>
+
+    <div class="row alt">
+      <div class="pol"><img src="images/08_dessert_date.jpg" alt="" data-img="p2_b1"><div class="cap" data-t="page2.cap_b1">your smile</div></div>
+      <div class="pol"><img src="images/09_peace_signs.jpg" alt="" data-img="p2_b2"><div class="cap" data-t="page2.cap_b2">us, always</div></div>
+    </div>
+
+    <div class="ticket">
+      <div class="t-small" data-t="page2.ticket_small">·  ticket no. 22-05-26  ·</div>
+      <div class="t-big" data-t="page2.ticket_big">admit one</div>
+      <div class="t-meta" data-t="page2.ticket_meta">→ a lifetime with Sheetal ←</div>
+    </div>
+
+    <div class="single-tilt">
+      <div class="pol"><img src="images/10_summer_polo.jpg" alt="" data-img="p2_tilt"><div class="cap" data-t="page2.cap_tilt">tumhare saath</div></div>
+    </div>
+
+    <div class="scribble" data-t="page2.scribble3_html">
+      every little moment with you <br><span class="heart-inline">♥</span> feels like home <span class="heart-inline">♥</span>
+    </div>
+
+    <div class="row">
+      <div class="pol"><img src="images/11_outdoor_jackets.jpg" alt="" data-img="p2_c1"><div class="cap" data-t="page2.cap_c1">forever ♥</div></div>
+      <div class="pol"><img src="images/12_store_stripes.jpg" alt="" data-img="p2_c2"><div class="cap" data-t="page2.cap_c2">my person</div></div>
+    </div>
+
+    <div class="closing">
+      <div class="heart-big">♥</div>
+      <div class="sig" data-t="page2.closing">happy birthday, jaan</div>
+    </div>
+
+    <div class="nav-row">
+      <a href="1-happy-birthday.html">← back</a>
+      <a href="3-queen.html">next →</a>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script src="gallery.js"></script>
+</body>
+</html>
