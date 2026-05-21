@@ -1,6 +1,6 @@
 // ====================================================
 // data.js — Master content file for the birthday site
-// Generated from admin · 5/22/2026, 3:12:07 AM
+// Generated from admin · 5/22/2026, 3:13:17 AM
 // ====================================================
 
 window.SITE_DATA = {
@@ -242,7 +242,7 @@ window.SITE_DATA = {
     "p5_r6c4": "35_neon_store.jpg",
     "p5_premium": "06_peach_kurta_couple.jpg",
     "p5_arch1": "10_summer_polo.jpg",
-    "p5_arch2": "19_cinema_couple.jpg",
+    "p5_arch2": "pool_113.jpg",
     "p5_arch3": "27_cinema_couple_2.jpg",
     "p6_ch1": "28_sunny_house.jpg",
     "p6_ch2": "pool_139.jpg",
