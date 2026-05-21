@@ -85,6 +85,135 @@
   .status.saved { color: var(--success); background: rgba(74, 222, 128, 0.1); }
   .status.saving { color: var(--warn); background: rgba(251, 191, 36, 0.1); }
 
+  /* Publish button states */
+  #btn-publish.pushing { background: var(--warn); border-color: var(--warn); color: #0d0d0d; }
+  #btn-publish.success { background: var(--success); border-color: var(--success); color: #0d0d0d; }
+  #btn-publish.error { background: var(--danger); border-color: var(--danger); color: white; }
+  #btn-publish.auto-on { box-shadow: 0 0 0 2px rgba(244, 222, 128, 0.18); }
+  #btn-publish.dim { opacity: 0.55; }
+
+  /* SETUP MODAL */
+  .setup-bg {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(8px);
+    z-index: 250;
+    display: none;
+    align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .setup-bg.show { display: flex; }
+  .setup-card {
+    background: var(--panel);
+    border: 1px solid var(--border-2);
+    border-radius: 12px;
+    max-width: 560px; width: 100%;
+    max-height: 90vh; overflow-y: auto;
+  }
+  .setup-card .head {
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .setup-card .head h3 { font-size: 15px; font-weight: 600; }
+  .setup-card .head button {
+    background: transparent; border: none;
+    color: var(--text-soft); font-size: 22px;
+    cursor: pointer; line-height: 1;
+  }
+  .setup-card .body { padding: 18px 22px 22px; }
+  .auto-row {
+    background: var(--bg-3);
+    border: 1px solid var(--border-2);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .auto-row label {
+    display: flex; align-items: center; gap: 10px;
+    cursor: pointer; font-size: 14px;
+    font-weight: 500;
+  }
+  .auto-row input[type="checkbox"] {
+    width: 18px; height: 18px;
+    cursor: pointer; accent-color: var(--accent);
+  }
+  .auto-hint {
+    font-size: 11px; color: var(--text-dim);
+  }
+  .auto-hint.has-token { color: var(--success); }
+  .auto-hint.no-token { color: var(--warn); }
+  .setup-card h4 {
+    font-size: 12px; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--text-soft);
+    margin: 0 0 12px; font-weight: 600;
+  }
+  .setup-steps {
+    list-style: decimal; padding-left: 22px;
+    font-size: 13px; color: var(--text-soft);
+    line-height: 1.7;
+    margin-bottom: 18px;
+  }
+  .setup-steps li { padding-left: 2px; }
+  .setup-steps a {
+    color: var(--info); text-decoration: none;
+    word-break: break-all;
+  }
+  .setup-steps a:hover { text-decoration: underline; }
+  .setup-steps code {
+    background: var(--bg);
+    padding: 2px 7px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text);
+    border: 1px solid var(--border-2);
+  }
+  .setup-steps strong { color: var(--text); }
+  .token-row {
+    display: block;
+    margin-bottom: 14px;
+  }
+  .token-row span {
+    display: block; font-size: 12px;
+    color: var(--text-soft); margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .token-row input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border-2);
+    color: var(--text);
+    padding: 10px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    border-radius: 6px;
+  }
+  .token-row input:focus {
+    outline: none; border-color: var(--accent);
+  }
+  .setup-actions {
+    display: flex; gap: 8px; align-items: center;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .setup-actions .grow { flex: 1; }
+  .setup-warn {
+    font-size: 11px; color: var(--text-dim);
+    line-height: 1.5;
+    padding: 10px 12px;
+    background: rgba(251, 191, 36, 0.08);
+    border-left: 2px solid var(--warn);
+    border-radius: 4px;
+  }
+  .last-push {
+    font-size: 11px; color: var(--text-dim);
+    margin-top: 12px;
+    text-align: right;
+  }
+
   /* TABS */
   .tabs {
     position: sticky; top: 56px; z-index: 90;
@@ -456,8 +585,12 @@
     <div class="actions">
       <span class="status saved" id="status">Saved</span>
       <a href="../index.html" target="_blank" class="btn ghost">↗ Open Site</a>
-      <button class="btn danger" id="btn-reset">Reset All</button>
-      <button class="btn primary" id="btn-export">↓ Download data.js</button>
+      <button class="btn ghost" id="btn-setup" title="GitHub setup">⚙</button>
+      <button class="btn primary" id="btn-publish" title="Push to GitHub now">
+        🚀 <span id="publish-label">Publish</span>
+      </button>
+      <button class="btn ghost" id="btn-export" title="Download data.js (backup)">↓</button>
+      <button class="btn danger" id="btn-reset" title="Reset all changes">Reset</button>
     </div>
   </div>
 
@@ -493,6 +626,53 @@
   </div>
 
   <div class="toast" id="toast"></div>
+
+  <!-- GitHub Auto-Publish Setup Modal -->
+  <div class="setup-bg" id="setup-modal">
+    <div class="setup-card">
+      <div class="head">
+        <h3>🚀 GitHub Auto-Publish</h3>
+        <button id="setup-close">✕</button>
+      </div>
+      <div class="body">
+        <div class="auto-row">
+          <label>
+            <input type="checkbox" id="auto-toggle">
+            <span>Auto-publish on every change</span>
+          </label>
+          <span class="auto-hint" id="auto-hint">—</span>
+        </div>
+
+        <h4>GitHub Personal Access Token</h4>
+        <ol class="setup-steps">
+          <li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a></li>
+          <li>Token name: <code>Birthday Site Admin</code></li>
+          <li>Expiration: <strong>90 days</strong> (or longer)</li>
+          <li>Repository access: <strong>Only select repositories</strong> → pick <code>birthday-gift-for-sheetal</code></li>
+          <li>Permissions → <strong>Contents</strong>: <strong>Read and write</strong></li>
+          <li>Click <strong>Generate token</strong> → copy it</li>
+        </ol>
+
+        <label class="token-row">
+          <span>Paste your token here:</span>
+          <input type="password" id="token-input" placeholder="github_pat_..." spellcheck="false" autocomplete="off">
+        </label>
+
+        <div class="setup-actions">
+          <button class="btn primary" id="token-save">Save Token</button>
+          <button class="btn ghost" id="token-test">Test Connection</button>
+          <span class="grow"></span>
+          <button class="btn danger" id="token-clear">Remove Token</button>
+        </div>
+
+        <p class="setup-warn">
+          ⚠ Your token is stored only in this browser's localStorage. Never share it with anyone — treat it like a password. You can revoke it any time at <a href="https://github.com/settings/tokens" target="_blank" rel="noopener" style="color: var(--info);">github.com/settings/tokens</a>.
+        </p>
+
+        <p class="last-push" id="last-push">No pushes yet.</p>
+      </div>
+    </div>
+  </div>
 
   <script src="../data.js"></script>
   <script>
@@ -834,7 +1014,6 @@
     const setVal = (path, val) => {
       const def = deepGet(DEFAULTS, path);
       if (val === def || val === undefined || val === null || val === "") {
-        // Same as default? remove override
         if (val === def || val === "") {
           deepUnset(OV, path);
         } else {
@@ -845,6 +1024,8 @@
       }
       setStatus("saving", "Saving…");
       saveOv(OV);
+      // Trigger auto-publish to GitHub if enabled
+      if (typeof scheduleAutoPush === "function") scheduleAutoPush();
     };
 
     // ====== Render fields ======
@@ -1338,6 +1519,265 @@ if (window.SITE_DATA.uploaded_inline) {
         : `data.js (${sizeKB} KB) downloaded`;
       toast(msg, "success");
     });
+
+    // ============================================================
+    // GitHub Auto-Publish
+    // ============================================================
+    const GH_CONFIG = {
+      owner: "princekhiwaliya",
+      repo: "birthday-gift-for-sheetal",
+      file: "data.js",
+      branch: "main"
+    };
+    const TOKEN_KEY = "gh_token_v1";
+    const AUTO_KEY = "gh_auto_v1";
+    const LAST_PUSH_KEY = "gh_last_push_v1";
+
+    const getToken = () => localStorage.getItem(TOKEN_KEY) || "";
+    const setStoredToken = (t) => {
+      if (t) localStorage.setItem(TOKEN_KEY, t);
+      else localStorage.removeItem(TOKEN_KEY);
+    };
+    const getAutoOn = () => localStorage.getItem(AUTO_KEY) === "1";
+    const setAutoOn = (v) => localStorage.setItem(AUTO_KEY, v ? "1" : "0");
+
+    // UTF-8 safe base64 encoding
+    function utf8ToB64(str) {
+      return btoa(unescape(encodeURIComponent(str)));
+    }
+
+    async function pushDataJsToGitHub(content) {
+      const token = getToken();
+      if (!token) throw new Error("No token. Click ⚙ to set up.");
+      const sizeKB = Math.round(content.length / 1024);
+      if (sizeKB > 950) {
+        throw new Error(`data.js too large (${sizeKB} KB). Push limit 1MB. Use ↓ Download instead.`);
+      }
+      const url = `https://api.github.com/repos/${GH_CONFIG.owner}/${GH_CONFIG.repo}/contents/${GH_CONFIG.file}`;
+      const headers = {
+        "Authorization": `Bearer ${token}`,
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28"
+      };
+      // 1. Get current file SHA
+      const getRes = await fetch(`${url}?ref=${GH_CONFIG.branch}`, { headers });
+      if (!getRes.ok) {
+        const e = await getRes.json().catch(() => ({}));
+        if (getRes.status === 401) throw new Error("Token invalid or expired.");
+        if (getRes.status === 404) throw new Error("Repo/file not found. Check token permissions.");
+        throw new Error(e.message || `GET failed: ${getRes.status}`);
+      }
+      const current = await getRes.json();
+      // 2. PUT new content
+      const putRes = await fetch(url, {
+        method: "PUT",
+        headers: { ...headers, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: `Update data.js via admin · ${new Date().toLocaleString()}`,
+          content: utf8ToB64(content),
+          sha: current.sha,
+          branch: GH_CONFIG.branch
+        })
+      });
+      if (!putRes.ok) {
+        const e = await putRes.json().catch(() => ({}));
+        throw new Error(e.message || `PUT failed: ${putRes.status}`);
+      }
+      return putRes.json();
+    }
+
+    // ─── Publish button states ───
+    const publishBtn = document.getElementById("btn-publish");
+    const publishLabel = document.getElementById("publish-label");
+    const lastPushEl = document.getElementById("last-push");
+
+    function refreshPublishUI() {
+      const hasToken = !!getToken();
+      const auto = getAutoOn();
+      publishBtn.classList.remove("auto-on", "dim");
+      if (!hasToken) {
+        publishLabel.textContent = "Setup";
+        publishBtn.classList.add("dim");
+        publishBtn.title = "Click ⚙ to set up GitHub auto-publish";
+      } else if (auto) {
+        publishLabel.textContent = "Auto: ON";
+        publishBtn.classList.add("auto-on");
+        publishBtn.title = "Auto-publish enabled. Click for immediate push.";
+      } else {
+        publishLabel.textContent = "Publish";
+        publishBtn.title = "Push to GitHub now";
+      }
+      const last = localStorage.getItem(LAST_PUSH_KEY);
+      if (lastPushEl) {
+        lastPushEl.textContent = last
+          ? `Last push: ${new Date(parseInt(last, 10)).toLocaleString()}`
+          : "No pushes yet.";
+      }
+    }
+
+    function setPublishStatus(state, info) {
+      publishBtn.classList.remove("pushing", "success", "error");
+      if (state === "queued") {
+        publishLabel.textContent = "Pushing in 3s…";
+      } else if (state === "pushing") {
+        publishLabel.textContent = "⏳ Pushing…";
+        publishBtn.classList.add("pushing");
+      } else if (state === "success") {
+        publishLabel.textContent = "✓ Live in ~1 min";
+        publishBtn.classList.add("success");
+        setTimeout(refreshPublishUI, 4500);
+      } else if (state === "error") {
+        publishLabel.textContent = "❌ " + (info || "Failed");
+        publishBtn.classList.add("error");
+        setTimeout(refreshPublishUI, 6500);
+      } else {
+        refreshPublishUI();
+      }
+    }
+
+    let pushing = false;
+    let pushTimer = null;
+
+    async function doPushNow() {
+      if (pushing) return;
+      if (!getToken()) {
+        openSetup();
+        toast("Set up GitHub token first ⚙", "error");
+        return;
+      }
+      pushing = true;
+      setPublishStatus("pushing");
+      try {
+        const content = generateDataJs();
+        await pushDataJsToGitHub(content);
+        localStorage.setItem(LAST_PUSH_KEY, String(Date.now()));
+        setPublishStatus("success");
+        toast("Pushed to GitHub · live in ~1 min", "success");
+      } catch (e) {
+        console.error("Push failed:", e);
+        setPublishStatus("error", (e.message || "").slice(0, 50));
+        toast("Push failed: " + e.message, "error");
+      } finally {
+        pushing = false;
+      }
+    }
+
+    function scheduleAutoPush() {
+      if (!getAutoOn() || !getToken()) return;
+      clearTimeout(pushTimer);
+      setPublishStatus("queued");
+      pushTimer = setTimeout(() => {
+        doPushNow();
+      }, 3000);
+    }
+
+    // Note: setVal() now calls scheduleAutoPush() directly (see definition above)
+
+    // ─── Publish button click ───
+    publishBtn.addEventListener("click", () => {
+      if (!getToken()) {
+        openSetup();
+      } else {
+        doPushNow();
+      }
+    });
+
+    // ─── Setup modal ───
+    const setupModal = document.getElementById("setup-modal");
+    const tokenInput = document.getElementById("token-input");
+    const autoToggle = document.getElementById("auto-toggle");
+    const autoHint = document.getElementById("auto-hint");
+
+    function openSetup() {
+      tokenInput.value = getToken() ? "(stored — paste new to replace)" : "";
+      autoToggle.checked = getAutoOn();
+      updateAutoHint();
+      setupModal.classList.add("show");
+    }
+    function closeSetup() { setupModal.classList.remove("show"); }
+
+    function updateAutoHint() {
+      const hasToken = !!getToken();
+      if (autoToggle.checked && hasToken) {
+        autoHint.textContent = "✓ enabled";
+        autoHint.className = "auto-hint has-token";
+      } else if (autoToggle.checked && !hasToken) {
+        autoHint.textContent = "⚠ needs token";
+        autoHint.className = "auto-hint no-token";
+      } else if (!autoToggle.checked && hasToken) {
+        autoHint.textContent = "off · token saved";
+        autoHint.className = "auto-hint";
+      } else {
+        autoHint.textContent = "no token";
+        autoHint.className = "auto-hint";
+      }
+    }
+
+    document.getElementById("btn-setup").addEventListener("click", openSetup);
+    document.getElementById("setup-close").addEventListener("click", closeSetup);
+    setupModal.addEventListener("click", (e) => {
+      if (e.target === setupModal) closeSetup();
+    });
+
+    autoToggle.addEventListener("change", () => {
+      setAutoOn(autoToggle.checked);
+      updateAutoHint();
+      refreshPublishUI();
+    });
+
+    document.getElementById("token-save").addEventListener("click", () => {
+      const val = tokenInput.value.trim();
+      if (!val || val.startsWith("(stored")) {
+        toast("Paste a token first", "error");
+        return;
+      }
+      if (!/^(github_pat_|ghp_)/i.test(val)) {
+        if (!confirm("That doesn't look like a GitHub token. Save anyway?")) return;
+      }
+      setStoredToken(val);
+      tokenInput.value = "(stored — paste new to replace)";
+      updateAutoHint();
+      refreshPublishUI();
+      toast("Token saved ✓", "success");
+    });
+
+    document.getElementById("token-test").addEventListener("click", async () => {
+      if (!getToken()) {
+        toast("Save a token first", "error");
+        return;
+      }
+      try {
+        const url = `https://api.github.com/repos/${GH_CONFIG.owner}/${GH_CONFIG.repo}`;
+        const r = await fetch(url, {
+          headers: {
+            "Authorization": `Bearer ${getToken()}`,
+            "Accept": "application/vnd.github+json"
+          }
+        });
+        if (r.ok) {
+          const j = await r.json();
+          toast(`Connected to ${j.full_name} ✓`, "success");
+        } else {
+          toast(`Failed: ${r.status} ${r.statusText}`, "error");
+        }
+      } catch (e) {
+        toast("Connection error: " + e.message, "error");
+      }
+    });
+
+    document.getElementById("token-clear").addEventListener("click", () => {
+      if (!confirm("Remove the saved GitHub token?")) return;
+      setStoredToken("");
+      setAutoOn(false);
+      autoToggle.checked = false;
+      tokenInput.value = "";
+      updateAutoHint();
+      refreshPublishUI();
+      toast("Token removed", "success");
+    });
+
+    // Initial UI sync
+    refreshPublishUI();
 
     setStatus("saved", "Saved");
   })();
